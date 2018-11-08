@@ -1,3 +1,9 @@
 Annotation
-destroy string int int
+destroy
+getProps Annotation
+### incompleted
+getStateInModel array string_Annotation_stateModel
+### incompleted
+setProps Annotation Annotation
+
 

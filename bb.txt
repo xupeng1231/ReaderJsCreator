@@ -1,2 +1,9 @@
-<new JString>=<Annotation>.destroy(<int>,<int>);
+<Annotation>.destroy();
+
+<new Annotation>=<Annotation>.getProps();
+
+### need to be specified
+<new array>=<Annotation>.getStateInModel(<string_Annotation_stateModel>);
+
+
 

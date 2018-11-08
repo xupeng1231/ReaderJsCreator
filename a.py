@@ -10,16 +10,19 @@ def main():
             line = line.strip()
             if len(line)<=0:
                 continue
+            if line.startswith("#"):
+                outf.write(line+"\n")
+                continue
             if class_name is None:
                 class_name=line
                 continue
             parts = line.split(" ")
             if len(parts) < 2:
-                outf.write("****{}****\n\n".format(line))
+                outf.write("# ****{}****\n\n".format(line))
                 continue
             if parts[0][0]=='-':
                 parts[0] = parts[0][1:]
-                outf.write("****{}****\n".format(line))
+                outf.write("# ****{}****\n".format(line))
             attr_name = parts[0]
             attr_type = parts[1]
             if len(parts) > 2:
