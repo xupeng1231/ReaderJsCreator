@@ -54,6 +54,7 @@ _NONINTERESTING_TYPES = [
     'short',
     'long',
     'DOMString',
+    'JString',
     'boolean',
     'float',
     'double'

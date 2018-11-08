@@ -1,0 +1,6 @@
+#81_example
+<Doc>=app.newDoc();
+<Annotation>=<Doc>.addAnnot({page:<int min=0 max=10>,type:<string_Annotation_type>,point:<array type=int len=2>,name:<JString>});
+<States>=new Object();
+#233_example
+<AlternatePresentation>=this.alternatePresentations[<JString>];

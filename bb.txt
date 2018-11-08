@@ -2,8 +2,11 @@
 
 <new Annotation>=<Annotation>.getProps();
 
-### need to be specified
+### incompleted
 <new array>=<Annotation>.getStateInModel(<string_Annotation_stateModel>);
 
+### incompleted
+<new Annotation>=<Annotation>.setProps(<Annotation>);
 
+<Annotation>.transitionToState(<JString>,<JString>);
 

@@ -1,0 +1,5 @@
+!begin lines
+#81_example
+<States>[<JString>]={cUIName: <JString>};
+<States>[<JString>]={cUIName: <JString>};
+Collab.addStateModel({cName: <JString>,cUIName: <JString>,oStates: <States>,cDefault: <JString>});

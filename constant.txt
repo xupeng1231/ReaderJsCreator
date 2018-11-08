@@ -46,6 +46,10 @@
 <string_Annotation_attachIcon>="PushPin"
 <string_Annotation_attachIcon>="Graph"
 <string_Annotation_attachIcon>="Tag"
+
+<string_Annotation_borderEffectStyle>=""
+<string_Annotation_borderEffectStyle>="C"
+
 <string_Annotation_caretSymbol>=""
 <string_Annotation_caretSymbol>="P"
 <string_Annotation_caretSymbol>="S"
@@ -78,6 +82,17 @@
 <string_Annotation_noteIcon>="Star"
 <string_Annotation_noteIcon>="UpArrow"
 <string_Annotation_noteIcon>="UpLeftArrow"
+
+<string_Annotation_refType>="R"
+<string_Annotation_refType>="Group"
+
+<string_Annotation_state>="Marked"
+<string_Annotation_state>="Unmarked"
+<string_Annotation_state>="Accepted"
+<string_Annotation_state>="Rejected"
+<string_Annotation_state>="Cancelled"
+<string_Annotation_state>="Completed"
+<string_Annotation_state>="None"
 
 <string_Annotation_stateModel>="Marked"
 <string_Annotation_stateModel>="Review"

@@ -1,7 +1,12 @@
+!include js_grammar.txt
+!include common.txt
 !include constant.txt
+!include js_line_casual.txt
+
+!begin lines
 # AlternatePresentation
 <new boolean>=<AlternatePresentation>.active;
-<new string>=<AlternatePresentation>.type;
+<new JString>=<AlternatePresentation>.type;
 <AlternatePresentation>.start(); #could have two optional parameters
 <AlternatePresentation>.stop();
 
@@ -21,13 +26,13 @@
 <Annotation>.attachIcon=<string_Annotation_attachIcon>  ;        #line code
 <new JString>=<Annotation>.attachIcon;
 
-<Annotation>.author=<string>;
+<Annotation>.author=<JString>;
 <new JString>=<Annotation>.author;
 
 <Annotation>.borderEffectIntensity=<int>;
 <new int>=<Annotation>.borderEffectIntensity;
 
-<Annotation>.borderEffectStyle=<string>;
+<Annotation>.borderEffectStyle=<string_Annotation_borderEffectStyle>;
 <new JString>=<Annotation>.borderEffectStyle;
 
 <Annotation>.callout=<array type=int minlen=4 maxlen=6 len_multiple=2>;
@@ -36,7 +41,7 @@
 <Annotation>.caretSymbol=<string_Annotation_caretSymbol>;
 <new JString>=<Annotation>.caretSymbol;
 
-<Annotation>.contents=<string>;
+<Annotation>.contents=<JString>;
 <new JString>=<Annotation>.contents;
 
 <Annotation>.creationDate=<Date>;                                    #readonly property
@@ -64,10 +69,10 @@
 <Annotation>.hidden=<boolean>;
 <new boolean>=<Annotation>.hidden;
 
-<Annotation>.inReplyTo=<string>;
-<Annotation>.intent=<string_Annotation_intent>;
+<Annotation>.inReplyTo=<JString>;
+<new JString>=<Annotation>.inReplyTo
 
-<Annotation>.intent=<string>;
+<Annotation>.intent=<string_Annotation_intent>;
 <new JString>=<Annotation>.intent;
 
 <Annotation>.leaderExtend=<int>;
@@ -85,8 +90,8 @@
 <Annotation>.modDate=<Date>;
 <new Date>=<Annotation>.modData;
 
-<Annotation>.name=<string>;
-<new string_Annotation_name>=<Annotation>.name;                              # string_Annotation_name used for this.getAnnot()'s second parameter
+<Annotation>.name=<JString>;
+<new JString>=<Annotation>.name;                              # string_Annotation_name used for this.getAnnot()'s second parameter
 
 <Annotation>.noteIcon=<string_Annotation_noteIcon>;
 <new JString>=<Annotation>.noteIcon;
@@ -125,8 +130,8 @@
 <Annotation>.readOnly=<boolean>;
 <new boolean>=<Annotation>.readOnly;
 
-<Annotation>.refType=<string>;
-<new string>=<Annotation>.refType;
+<Annotation>.refType=<string_Annotation_refType>;
+<new JString>=<Annotation>.refType;
 
 <Annotation>.richContents=<array type=Span minlen=0 maxlen=32>;
 <new array>=<Annotation>.richContents;
@@ -140,10 +145,10 @@
 <Annotation>.seqNum=<int>;
 <new int>=<Annotation>.seqNum;
 
-<Annotation>.soundIcon=<string>;
+<Annotation>.soundIcon=<JString>;
 <new JString>=<Annotation>.soundIcon;
 
-<Annotation>.state=<string>;
+<Annotation>.state=<string_Annotation_state>;
 <new JString>=<Annotation>.state;
 
 <Annotation>.stateModel=<string_Annotation_stateModel>;
@@ -155,7 +160,7 @@
 <Annotation>.style=<string_Annotation_style>;
 <new JString>=<Annotation>.style;
 
-<Annotation>.subject=<string>;
+<Annotation>.subject=<JString>;
 <new JString>=<Annotation>.subject;
 
 <Annotation>.textFont=<Font>;
@@ -176,3 +181,16 @@
 
 <Annotation>.width=<int min=0 max=1>;
 <new int>=<Annotation>.width;
+
+<Annotation>.destroy();
+
+### recursive
+<new Annotation>=<Annotation>.getProps();
+
+### incompleted
+<new array>=<Annotation>.getStateInModel(<string_Annotation_stateModel>);
+
+### incompleted recursive
+<new Annotation>=<Annotation>.setProps(<Annotation>);
+
+<Annotation>.transitionToState(<JString>,<JString>);
