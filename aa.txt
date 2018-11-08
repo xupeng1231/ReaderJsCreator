@@ -1,0 +1,46 @@
+<Annotation>.seqNum=<int>
+<new int>=<Annotation>.seqNum
+
+<Annotation>.soundIcon=<string>
+<new JString>=<Annotation>.soundIcon
+
+<Annotation>.state=<string>
+<new JString>=<Annotation>.state
+
+<Annotation>.stateModel=<string_Annotation_stateModel>
+<new JString>=<Annotation>.stateModel
+<string_Annotation_stateModel>="Marked"
+<string_Annotation_stateModel>="Review"
+
+<Annotation>.strokeColor=<Color>
+<new Color>=<Annotation>.strokeColor
+
+<Annotation>.style=<string_Annotation_style>
+<new JString>=<Annotation>.style
+<string_Annotation_style>="S"
+<string_Annotation_style>="D"
+
+<Annotation>.subject=<string>
+<new JString>=<Annotation>.subject
+
+<Annotation>.textFont=<Font>
+<new Font>=<Annotation>.textFont
+
+****textSize****
+
+<Annotation>.toggleNoView=<boolean>
+<new boolean>=<Annotation>.toggleNoView
+
+<Annotation>.type=<string_Annotation_type>
+<new JString>=<Annotation>.type
+<string_Annotation_type>="Text"
+<string_Annotation_type>="FreeText"
+
+****-vertices array****
+<Annotation>.vertices=<array>
+<new array>=<Annotation>.vertices
+
+****-width int****
+<Annotation>.width=<int>
+<new int>=<Annotation>.width
+

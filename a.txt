@@ -1,0 +1,15 @@
+Annotation
+seqNum int
+soundIcon string
+state string
+stateModel string Marked Review
+strokeColor Color
+style string S D
+subject string
+textFont Font
+textSize
+toggleNoView boolean
+type string Text FreeText
+-vertices array
+-width int
+

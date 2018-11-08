@@ -1,0 +1,10 @@
+<new Int8Array> = new Int8Array(<fuzzint>);
+<new Int16Array> = new Int16Array(<fuzzint>);
+<new Int32Array> = new Int32Array(<fuzzint>);
+<new Uint8Array> = new Uint8Array(<fuzzint>);
+<new Uint16Array> = new Uint16Array(<fuzzint>);
+<new Uint32Array> = new Uint32Array(<fuzzint>);
+<new Float32Array> = new Float32Array(<fuzzint>);
+<new Float64Array> = new Float64Array(<fuzzint>);
+<new Uint8ClampedArray> = new Uint8ClampedArray(<fuzzint>);
+<new Date>=new Date()

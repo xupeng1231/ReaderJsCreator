@@ -1,0 +1,178 @@
+!include constant.txt
+# AlternatePresentation
+<new boolean>=<AlternatePresentation>.active;
+<new string>=<AlternatePresentation>.type;
+<AlternatePresentation>.start(); #could have two optional parameters
+<AlternatePresentation>.stop();
+
+# Annotation
+<Annotation>.alignment=<int_Annotation_align>;                   # line code
+<new long>=<Annotation>.alignment;
+
+<Annotation>.AP=<string_Annotation_AP>;                    #line code
+<new JString>=<Annotation>.AP;
+
+<Annotation>.arrowBegin=<string_Annotation_arrowBeginEnd>;      #line code
+<new JString>=<Annotation>.arrowBegin;
+
+<Annotation>.arrowEnd=<string_Annotation_arrowBeginEnd> ;        #line code
+<new JString>=<Annotation>.arrowEnd;
+
+<Annotation>.attachIcon=<string_Annotation_attachIcon>  ;        #line code
+<new JString>=<Annotation>.attachIcon;
+
+<Annotation>.author=<string>;
+<new JString>=<Annotation>.author;
+
+<Annotation>.borderEffectIntensity=<int>;
+<new int>=<Annotation>.borderEffectIntensity;
+
+<Annotation>.borderEffectStyle=<string>;
+<new JString>=<Annotation>.borderEffectStyle;
+
+<Annotation>.callout=<array type=int minlen=4 maxlen=6 len_multiple=2>;
+<new array>=<Annotation>.callout;
+
+<Annotation>.caretSymbol=<string_Annotation_caretSymbol>;
+<new JString>=<Annotation>.caretSymbol;
+
+<Annotation>.contents=<string>;
+<new JString>=<Annotation>.contents;
+
+<Annotation>.creationDate=<Date>;                                    #readonly property
+<new Date>=<Annotation>.creationDate;
+
+<Annotation>.dash=<array type=int len=2>
+<new Int32Array>=<Annotation>.dash;
+
+<Annotation>.delay=<boolean>;
+<new boolean>=<Annotation>.delay;
+
+<Annotation>.doc=<Doc>;                                              #readonly property
+<new Doc>=<Annotation>.doc;
+
+<Annotation>.doCaption=<boolean>;
+<new boolean>=<Annotation>.doCaption;
+
+<Annotation>.fillColor=<Color>;
+<new Color>=<Annotation>.fillColor;
+
+<new array_ints>=<array type=int minlen=0 >;
+<Annotation>.gestures=<array type=array_ints minlen=0>;
+<arr_arr>=<Annotation>.gestures;
+
+<Annotation>.hidden=<boolean>;
+<new boolean>=<Annotation>.hidden;
+
+<Annotation>.inReplyTo=<string>;
+<Annotation>.intent=<string_Annotation_intent>;
+
+<Annotation>.intent=<string>;
+<new JString>=<Annotation>.intent;
+
+<Annotation>.leaderExtend=<int>;
+<new int>=<Annotation>.leaderExtend;
+
+<Annotation>.leaderLength=<int>;
+<new int>=<Annotation>.leaderLength;
+
+<Annotation>.lineEnding=<string_Annotation_lineEnding>;
+<new JString>=<Annotation>.lineEnding;
+
+<Annotation>.lock=<boolean>;
+<new boolean>=<Annotation>.lock;
+
+<Annotation>.modDate=<Date>;
+<new Date>=<Annotation>.modData;
+
+<Annotation>.name=<string>;
+<new string_Annotation_name>=<Annotation>.name;                              # string_Annotation_name used for this.getAnnot()'s second parameter
+
+<Annotation>.noteIcon=<string_Annotation_noteIcon>;
+<new JString>=<Annotation>.noteIcon;
+
+<Annotation>.noView=<boolean>;
+<new boolean>=<Annotation>.noView;
+
+<Annotation>.opacity=<float min=0 max=1>;
+<new float>=<Annotation>.opacity;
+
+<Annotation>.page=<int min=0 max=30>;
+<new int>=<Annotation>.page;
+
+<Annotation>.point=[<int>,<int>];
+<new array>=<Annotation>.point;
+
+<new array_2int>=<array type=int len=2>;
+<Annotation>.points=<array type=array_2int len=2>;
+<new array>=<Annotation>.points;
+
+<Annotation>.popupOpen=<boolean>;
+<new boolean>=<Annotation>.popupOpen;
+
+<Annotation>.popupRect=<array type=int len=4>;
+<new array>=<Annotation>.popupRect;
+
+<Annotation>.print=<boolean>;
+<new boolean>=<Annotation>.print;
+
+<Annotation>.quads=<array type=int minlen=0 len_multiple=8>;
+<new array>=<Annotation>.quads;
+
+<Annotation>.rect=<array type=int len=4>;
+<new array>=<Annotation>.rect;
+
+<Annotation>.readOnly=<boolean>;
+<new boolean>=<Annotation>.readOnly;
+
+<Annotation>.refType=<string>;
+<new string>=<Annotation>.refType;
+
+<Annotation>.richContents=<array type=Span minlen=0 maxlen=32>;
+<new array>=<Annotation>.richContents;
+
+<Annotation>.richDefaults=<Span>;
+<new Span>=<Annotation>.richDefaults;
+
+<Annotation>.rotate=<int>;
+<new int>=<Annotation>.rotate;
+
+<Annotation>.seqNum=<int>;
+<new int>=<Annotation>.seqNum;
+
+<Annotation>.soundIcon=<string>;
+<new JString>=<Annotation>.soundIcon;
+
+<Annotation>.state=<string>;
+<new JString>=<Annotation>.state;
+
+<Annotation>.stateModel=<string_Annotation_stateModel>;
+<new JString>=<Annotation>.stateModel;
+
+<Annotation>.strokeColor=<Color>;
+<new Color>=<Annotation>.strokeColor;
+
+<Annotation>.style=<string_Annotation_style>;
+<new JString>=<Annotation>.style;
+
+<Annotation>.subject=<string>;
+<new JString>=<Annotation>.subject;
+
+<Annotation>.textFont=<Font>;
+<new Font>=<Annotation>.textFont;
+
+<Annotation>.textSize=<int min=0 max=144>;
+<new int>=<Annotation>.textSize;
+
+<Annotation>.toggleNoView=<boolean>;
+<new boolean>=<Annotation>.toggleNoView;
+
+<Annotation>.type=<string_Annotation_type>;
+<new JString>=<Annotation>.type;
+
+<new array_nint>=<array type=int minlen=0>;
+<Annotation>.vertices=<array type=array_nint minlen=0>;
+<new array>=<Annotation>.vertices;
+
+<Annotation>.width=<int min=0 max=1>;
+<new int>=<Annotation>.width;
