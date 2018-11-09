@@ -7,3 +7,21 @@
 <JString> = "1"
 <JString> = String.fromCharCode(<charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>)
 <JString> = String.fromCodePoint(<unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>, <unicode>)
+
+<Color>=color.transparent
+<Color>=color.black
+<Color>=color.white
+<Color>=color.red
+<Color>=color.green
+<Color>=color.blue
+<Color>=color.cyan
+<Color>=color.magenta
+<Color>=color.yellow
+<Color>=color.dkGray
+<Color>=color.gray
+<Color>=color.ltGray
+<Color>=["RGB",<float min=0 max=1>,<float min=0 max=1>,<float min=0 max=1>]
+<Color>=["R",<float min=0 max=1>]
+<Color>=["G",<float min=0 max=1>]
+<Color>=["B",<float min=0 max=1>]
+<Color>=["CMYK",<float min=0 max=1>,<float min=0 max=1>,<float min=0 max=1>,<float min=0 max=1>]

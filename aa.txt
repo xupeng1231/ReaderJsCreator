@@ -1,46 +1,89 @@
-<Annotation>.seqNum=<int>
-<new int>=<Annotation>.seqNum
 
-<Annotation>.soundIcon=<string>
-<new JString>=<Annotation>.soundIcon
+#rawnotes "app\n#privileged readonly\nactiveDocs array\ncalculate boolean\nconstants app_constants\nfocusRect boolean\n#readonly\nformsVersion int\nfromPDFConverters array\n#readonly\nfs FullScreen\nfullscreen boolean\nlanguage string CHS CHT DAN DEU ENU ESP FRA ITA KOR JPN NLD NOR PTB SUO SVE\n#app.media treated as a unique class\nmedia\nmonitors Monitors\n#readonly\nnumPlugIns int\nopenInPlace boolean\n#readonly\nplatform string WIN MAC UNIX\nplugIns Array_PlugIn\nprintColorProfiles Array_String_ColorProfile\n#readonly\n-printerNames array\nruntimeHighlight boolean\n-runtimeHighlightColor array-Color\n#readonly\nthermometer Thermometer\n\n"
+#privileged readonly
+<app>.activeDocs=<array>;
+<new array>=<app>.activeDocs;
 
-<Annotation>.state=<string>
-<new JString>=<Annotation>.state
+<app>.calculate=<boolean>;
+<new boolean>=<app>.calculate;
 
-<Annotation>.stateModel=<string_Annotation_stateModel>
-<new JString>=<Annotation>.stateModel
-<string_Annotation_stateModel>="Marked"
-<string_Annotation_stateModel>="Review"
+<app>.constants=<app_constants>;
+<new app_constants>=<app>.constants;
 
-<Annotation>.strokeColor=<Color>
-<new Color>=<Annotation>.strokeColor
+<app>.focusRect=<boolean>;
+<new boolean>=<app>.focusRect;
 
-<Annotation>.style=<string_Annotation_style>
-<new JString>=<Annotation>.style
-<string_Annotation_style>="S"
-<string_Annotation_style>="D"
+#readonly
+<app>.formsVersion=<int>;
+<new int>=<app>.formsVersion;
 
-<Annotation>.subject=<string>
-<new JString>=<Annotation>.subject
+<app>.fromPDFConverters=<array>;
+<new array>=<app>.fromPDFConverters;
 
-<Annotation>.textFont=<Font>
-<new Font>=<Annotation>.textFont
+#readonly
+<app>.fs=<FullScreen>;
+<new FullScreen>=<app>.fs;
 
-****textSize****
+<app>.fullscreen=<boolean>;
+<new boolean>=<app>.fullscreen;
 
-<Annotation>.toggleNoView=<boolean>
-<new boolean>=<Annotation>.toggleNoView
+<app>.language=<string_app_language>;
+<new JString>=<app>.language;
+<string_app_language>="CHS";
+<string_app_language>="CHT";
+<string_app_language>="DAN";
+<string_app_language>="DEU";
+<string_app_language>="ENU";
+<string_app_language>="ESP";
+<string_app_language>="FRA";
+<string_app_language>="ITA";
+<string_app_language>="KOR";
+<string_app_language>="JPN";
+<string_app_language>="NLD";
+<string_app_language>="NOR";
+<string_app_language>="PTB";
+<string_app_language>="SUO";
+<string_app_language>="SVE";
 
-<Annotation>.type=<string_Annotation_type>
-<new JString>=<Annotation>.type
-<string_Annotation_type>="Text"
-<string_Annotation_type>="FreeText"
+#app.media treated as a unique class
+# ****media****
 
-****-vertices array****
-<Annotation>.vertices=<array>
-<new array>=<Annotation>.vertices
+<app>.monitors=<Monitors>;
+<new Monitors>=<app>.monitors;
 
-****-width int****
-<Annotation>.width=<int>
-<new int>=<Annotation>.width
+#readonly
+<app>.numPlugIns=<int>;
+<new int>=<app>.numPlugIns;
+
+<app>.openInPlace=<boolean>;
+<new boolean>=<app>.openInPlace;
+
+#readonly
+<app>.platform=<string_app_platform>;
+<new JString>=<app>.platform;
+<string_app_platform>="WIN";
+<string_app_platform>="MAC";
+<string_app_platform>="UNIX";
+
+<app>.plugIns=<Array_PlugIn>;
+<new Array_PlugIn>=<app>.plugIns;
+
+<app>.printColorProfiles=<Array_String_ColorProfile>;
+<new Array_String_ColorProfile>=<app>.printColorProfiles;
+
+#readonly
+# ****-printerNames array****
+<app>.printerNames=<array>;
+<new array>=<app>.printerNames;
+
+<app>.runtimeHighlight=<boolean>;
+<new boolean>=<app>.runtimeHighlight;
+
+# ****-runtimeHighlightColor array-Color****
+<app>.runtimeHighlightColor=<array type=Color>;
+<new array type=Color>=<app>.runtimeHighlightColor;
+
+#readonly
+<app>.thermometer=<Thermometer>;
+<new Thermometer>=<app>.thermometer;
 

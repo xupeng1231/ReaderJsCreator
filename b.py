@@ -5,6 +5,7 @@ def main():
         s = inf.read()
     lines = s.split("\n")
     with open(outfile_path,"wt") as outf:
+        outf.write('\n#rawnotes "{}"\n'.format(s.replace("\n", "\\n")))
         class_name=None
         for line in lines:
             line = line.strip()

@@ -1,15 +1,34 @@
-Annotation
-seqNum int
-soundIcon string
-state string
-stateModel string Marked Review
-strokeColor Color
-style string S D
-subject string
-textFont Font
-textSize
-toggleNoView boolean
-type string Text FreeText
--vertices array
--width int
+app
+#privileged readonly
+activeDocs array
+calculate boolean
+constants app_constants
+focusRect boolean
+#readonly
+formsVersion int
+fromPDFConverters array
+#readonly
+fs FullScreen
+fullscreen boolean
+language string CHS CHT DAN DEU ENU ESP FRA ITA KOR JPN NLD NOR PTB SUO SVE
+#app.media treated as a unique class
+media
+monitors Monitors
+#readonly
+numPlugIns int
+openInPlace boolean
+#readonly
+platform string WIN MAC UNIX
+plugIns Array_PlugIn
+printColorProfiles Array_String_ColorProfile
+#readonly
+-printerNames array
+runtimeHighlight boolean
+-runtimeHighlightColor array-Color
+#readonly
+thermometer Thermometer
+toolbar boolean
+toolbarHorizontal boolean
+toolbarVertical boolean
+
 

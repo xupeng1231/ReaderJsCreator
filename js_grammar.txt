@@ -4,3 +4,4 @@
 <States>=new Object();
 #233_example
 <AlternatePresentation>=this.alternatePresentations[<JString>];
+<app>=app

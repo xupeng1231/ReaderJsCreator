@@ -3,3 +3,8 @@
 <States>[<JString>]={cUIName: <JString>};
 <States>[<JString>]={cUIName: <JString>};
 Collab.addStateModel({cName: <JString>,cUIName: <JString>,oStates: <States>,cDefault: <JString>});
+<new PlugIn>=<Array_PlugIn>[<int min=0 max=5>];
+<new ColorProfile>=<Array_String_ColorProfile>[<int min=0 max=5 best=0>];
+<new PrintParams>=this.getPrintParams();
+<PrintParams>.colorProfile=<ColorProfile>
+
