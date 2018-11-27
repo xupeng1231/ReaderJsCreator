@@ -1,8 +1,8 @@
 
-#rawnotes "app\n#privileged readonly\nactiveDocs array\ncalculate boolean\nconstants app_constants\nfocusRect boolean\n#readonly\nformsVersion int\nfromPDFConverters array\n#readonly\nfs FullScreen\nfullscreen boolean\nlanguage string CHS CHT DAN DEU ENU ESP FRA ITA KOR JPN NLD NOR PTB SUO SVE\n#app.media treated as a unique class\nmedia\nmonitors Monitors\n#readonly\nnumPlugIns int\nopenInPlace boolean\n#readonly\nplatform string WIN MAC UNIX\nplugIns Array_PlugIn\nprintColorProfiles Array_String_ColorProfile\n#readonly\n-printerNames array\nruntimeHighlight boolean\n-runtimeHighlightColor array-Color\n#readonly\nthermometer Thermometer\n\n"
+#rawnotes "app\n#privileged readonly\nactiveDocs array-Doc\ncalculate boolean\nconstants app_constants\nfocusRect boolean\n#readonly\nformsVersion int\nfromPDFConverters array\n#readonly\nfs FullScreen\nfullscreen boolean\nlanguage string CHS CHT DAN DEU ENU ESP FRA ITA KOR JPN NLD NOR PTB SUO SVE\n#app.media treated as a unique class\nmedia\nmonitors Monitors\n#readonly\nnumPlugIns int\nopenInPlace boolean\n#readonly\nplatform string WIN MAC UNIX\nplugIns Array_PlugIn\nprintColorProfiles Array_String_ColorProfile\n#readonly\n-printerNames array-JString\nruntimeHighlight boolean\n-runtimeHighlightColor array-Color\n#readonly\nthermometer Thermometer\ntoolbar boolean\ntoolbarHorizontal boolean\ntoolbarVertical boolean\n#readonly\nviewerType string Reader Exchange Exchange-Pro\n#readonly\n-viewerVariation string Reader Fill-In Business Tools Full\n#readonly\nviewerVersion int"
 #privileged readonly
-<app>.activeDocs=<array>;
-<new array>=<app>.activeDocs;
+<app>.activeDocs=<array type=Doc>;
+<new array type=Doc>=<app>.activeDocs;
 
 <app>.calculate=<boolean>;
 <new boolean>=<app>.calculate;
@@ -72,9 +72,9 @@
 <new Array_String_ColorProfile>=<app>.printColorProfiles;
 
 #readonly
-# ****-printerNames array****
-<app>.printerNames=<array>;
-<new array>=<app>.printerNames;
+# ****-printerNames array-JString****
+<app>.printerNames=<array type=JString>;
+<new array type=JString>=<app>.printerNames;
 
 <app>.runtimeHighlight=<boolean>;
 <new boolean>=<app>.runtimeHighlight;
@@ -86,4 +86,33 @@
 #readonly
 <app>.thermometer=<Thermometer>;
 <new Thermometer>=<app>.thermometer;
+
+<app>.toolbar=<boolean>;
+<new boolean>=<app>.toolbar;
+
+<app>.toolbarHorizontal=<boolean>;
+<new boolean>=<app>.toolbarHorizontal;
+
+<app>.toolbarVertical=<boolean>;
+<new boolean>=<app>.toolbarVertical;
+
+#readonly
+<app>.viewerType=<string_app_viewerType>;
+<new JString>=<app>.viewerType;
+<string_app_viewerType>="Reader";
+<string_app_viewerType>="Exchange";
+<string_app_viewerType>="Exchange-Pro";
+
+#readonly
+# ****-viewerVariation string Reader Fill-In Business Tools Full****
+<app>.viewerVariation=<string_app_viewerVariation>;
+<new JString>=<app>.viewerVariation;
+<string_app_viewerVariation>="Reader";
+<string_app_viewerVariation>="Fill-In";
+<string_app_viewerVariation>="Business Tools";
+<string_app_viewerVariation>="Full";
+
+#readonly
+<app>.viewerVersion=<int>;
+<new int>=<app>.viewerVersion;
 

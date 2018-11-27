@@ -216,3 +216,98 @@
 #incomplete
 <Annot3D>.rect=<array type=int len=4>;
 <new array>=<Annot3D>.rect;
+
+
+#rawnotes "app\n#privileged readonly\nactiveDocs array-Doc\ncalculate boolean\nconstants app_constants\nfocusRect boolean\n#readonly\nformsVersion int\nfromPDFConverters array\n#readonly\nfs FullScreen\nfullscreen boolean\nlanguage string CHS CHT DAN DEU ENU ESP FRA ITA KOR JPN NLD NOR PTB SUO SVE\n#app.media treated as a unique class\nmedia\nmonitors Monitors\n#readonly\nnumPlugIns int\nopenInPlace boolean\n#readonly\nplatform string WIN MAC UNIX\nplugIns Array_PlugIn\nprintColorProfiles Array_String_ColorProfile\n#readonly\n-printerNames array-JString\nruntimeHighlight boolean\n-runtimeHighlightColor array-Color\n#readonly\nthermometer Thermometer\ntoolbar boolean\ntoolbarHorizontal boolean\ntoolbarVertical boolean\n#readonly\nviewerType string Reader Exchange Exchange-Pro\n#readonly\n-viewerVariation string Reader Fill-In Business Tools Full\n#readonly\nviewerVersion int"
+#privileged readonly
+<app>.activeDocs=<array type=Doc>;
+<new array type=Doc>=<app>.activeDocs;
+
+<app>.calculate=<boolean>;
+<new boolean>=<app>.calculate;
+
+<app>.constants=<app_constants>;
+<new app_constants>=<app>.constants;
+
+<app>.focusRect=<boolean>;
+<new boolean>=<app>.focusRect;
+
+#readonly
+<app>.formsVersion=<int>;
+<new int>=<app>.formsVersion;
+
+<app>.fromPDFConverters=<array>;
+<new array>=<app>.fromPDFConverters;
+
+#readonly
+<app>.fs=<FullScreen>;
+<new FullScreen>=<app>.fs;
+
+<app>.fullscreen=<boolean>;
+<new boolean>=<app>.fullscreen;
+
+<app>.language=<string_app_language>;
+<new JString>=<app>.language;
+
+#app.media treated as a unique class
+# ****media****
+
+<app>.monitors=<Monitors>;
+<new Monitors>=<app>.monitors;
+
+#readonly
+<app>.numPlugIns=<int>;
+<new int>=<app>.numPlugIns;
+
+<app>.openInPlace=<boolean>;
+<new boolean>=<app>.openInPlace;
+
+#readonly
+<app>.platform=<string_app_platform>;
+<new JString>=<app>.platform;
+
+<app>.plugIns=<Array_PlugIn>;
+<new Array_PlugIn>=<app>.plugIns;
+
+<app>.printColorProfiles=<Array_String_ColorProfile>;
+<new Array_String_ColorProfile>=<app>.printColorProfiles;
+
+#readonly
+# ****-printerNames array-JString****
+<app>.printerNames=<array type=JString>;
+<new array type=JString>=<app>.printerNames;
+
+<app>.runtimeHighlight=<boolean>;
+<new boolean>=<app>.runtimeHighlight;
+
+# ****-runtimeHighlightColor array-Color****
+<app>.runtimeHighlightColor=<array type=Color>;
+<new array type=Color>=<app>.runtimeHighlightColor;
+
+#readonly
+<app>.thermometer=<Thermometer>;
+<new Thermometer>=<app>.thermometer;
+
+<app>.toolbar=<boolean>;
+<new boolean>=<app>.toolbar;
+
+<app>.toolbarHorizontal=<boolean>;
+<new boolean>=<app>.toolbarHorizontal;
+
+<app>.toolbarVertical=<boolean>;
+<new boolean>=<app>.toolbarVertical;
+
+#readonly
+<app>.viewerType=<string_app_viewerType>;
+<new JString>=<app>.viewerType;
+
+
+#readonly
+# ****-viewerVariation string Reader Fill-In Business Tools Full****
+<app>.viewerVariation=<string_app_viewerVariation>;
+<new JString>=<app>.viewerVariation;
+
+#readonly
+<app>.viewerVersion=<int>;
+<new int>=<app>.viewerVersion;
+

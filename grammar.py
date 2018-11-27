@@ -277,8 +277,8 @@ class Grammar(object):
 
         for v in initial_variables:
             self._add_variable(v['name'], v['type'], context)
-        self._add_variable('document', 'Document', context)
-        self._add_variable('window', 'Window', context)
+        # self._add_variable('document', 'Document', context)
+        # self._add_variable('window', 'Window', context)
 
         while len(context['lines']) < num_lines:
             tmp_context = context.copy()

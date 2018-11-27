@@ -1,4 +1,10 @@
+
+<app>=app
+
 <Date>=new Date()
+
+<boolean>=false
+<boolean>=true
 
 <charcode> = <int min=32 max=126>
 <unicode> = <int min=0 max=1114111>

@@ -1,10 +1,2 @@
-Annotation
-destroy
-getProps Annotation
-### incompleted
-getStateInModel array string_Annotation_stateModel
-### incompleted
-setProps Annotation Annotation
-transitionToState - JString JString
-
-
+app
+addAnnot Annotation Annotation_literal

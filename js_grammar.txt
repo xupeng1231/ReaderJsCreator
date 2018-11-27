@@ -2,6 +2,8 @@
 <Doc>=app.newDoc();
 <Annotation>=<Doc>.addAnnot({page:<int min=0 max=10>,type:<string_Annotation_type>,point:<array type=int len=2>,name:<JString>});
 <States>=new Object();
+
 #233_example
-<AlternatePresentation>=this.alternatePresentations[<JString>];
-<app>=app
+<AlternatePresentation>=this.alternatePresentations[<JString>]
+<Annotation_literal>={page: <int min=0 max=5>,type:"Text",author:<JString>,point: [<int>,<int>],strokeColor: <Color>,contents:<JString>,noteIcon:<JString>};
+<Annotation_literal>={page: <int min=0 max=5>,type:"Square",rect: [<int>,<int>,<int>,<int>],name:<JString>,author:<JString>,contents:<JString>};

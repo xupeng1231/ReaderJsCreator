@@ -64,7 +64,7 @@ def main():
                     out_str = "<{}>.{}=<{}>;\n".format(class_name, attr_name, "{}_{}_{}".format(attr_type,class_name,attr_name))
                     out_str += "<new {}>=<{}>.{};\n".format(attr_type if attr_type != "string" else "JString", class_name, attr_name)
                     for part in parts[2:]:
-                        out_str += "<{}>={};\n".format("{}_{}_{}".format(attr_type,class_name,attr_name), part if attr_type!="string"else "\"{}\"".format(part))
+                        out_str += "<{}>={}\n".format("{}_{}_{}".format(attr_type,class_name,attr_name), part if attr_type!="string"else "\"{}\"".format(part))
                 outf.write(out_str+"\n")
 
 

@@ -1,12 +1,4 @@
-<Annotation>.destroy();
 
-<new Annotation>=<Annotation>.getProps();
-
-### incompleted
-<new array>=<Annotation>.getStateInModel(<string_Annotation_stateModel>);
-
-### incompleted
-<new Annotation>=<Annotation>.setProps(<Annotation>);
-
-<Annotation>.transitionToState(<JString>,<JString>);
+#rawnotes "app\naddAnnot Annotation Annotation_literal"
+<new Annotation>=<app>.addAnnot(<Annotation_literal>);
 
