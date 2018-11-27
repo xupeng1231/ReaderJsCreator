@@ -34,11 +34,12 @@ def generate(samples, num=1):
         outpages = random.sample(input_pages, min(outpage_num, len(input_pages)))
         for outpage in outpages:
             output.addPage(outpage)
+
         outfilename = "{}_{:01d}_{:08x}.pdf".format(time.strftime("%m_%d_%H_%M_%S"), len(outpages), random.getrandbits(32),)
         outfilename=os.path.join(InputDir,outfilename)
+
         outfile = file(outfilename, "wb")
         output.write(outfile)
-
         outfile.close()
 
 def main():
