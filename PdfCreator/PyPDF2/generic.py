@@ -45,6 +45,8 @@ import decimal
 import codecs
 import sys
 #import debugging
+print __name__
+from PdfCreator.utils import R
 
 ObjectPrefix = b_('/<[tf(n%')
 NumberSigns = b_('+-')
@@ -106,7 +108,7 @@ class PdfObject(object):
 
 
 class NullObject(PdfObject):
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         stream.write(b_("null"))
 
     def readFromStream(stream):
@@ -121,7 +123,7 @@ class BooleanObject(PdfObject):
     def __init__(self, value):
         self.value = value
 
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         if self.value:
             stream.write(b_("true"))
         else:
@@ -140,11 +142,11 @@ class BooleanObject(PdfObject):
 
 
 class ArrayObject(list, PdfObject):
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         stream.write(b_("["))
         for data in self:
             stream.write(b_(" "))
-            data.writeToStream(stream, encryption_key)
+            data.writeToStream(stream, encryption_key, context)
         stream.write(b_(" ]"))
 
     def readFromStream(stream, pdf):
@@ -193,7 +195,7 @@ class IndirectObject(PdfObject):
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         stream.write(b_("%s %s R" % (self.idnum, self.generation)))
 
     def readFromStream(stream, pdf):
@@ -245,8 +247,11 @@ class FloatObject(decimal.Decimal, PdfObject):
     def as_numeric(self):
         return float(b_(repr(self)))
 
-    def writeToStream(self, stream, encryption_key):
-        stream.write(b_(repr(self)))
+    def writeToStream(self, stream, encryption_key, context):
+        data = b_(repr(self))
+        if context and context["record_switch"]:
+            context["interesting_values"]["float"].add(data)
+        stream.write(data)
 
 
 class NumberObject(int, PdfObject):
@@ -263,8 +268,11 @@ class NumberObject(int, PdfObject):
     def as_numeric(self):
         return int(b_(repr(self)))
 
-    def writeToStream(self, stream, encryption_key):
-        stream.write(b_(repr(self)))
+    def writeToStream(self, stream, encryption_key, context):
+        data = b_(repr(self))
+        if context and context["record_switch"]:
+            context["interesting_values"]["num"].add(data)
+        stream.write(data)
 
     def readFromStream(stream):
         num = utils.readUntilRegex(stream, NumberObject.NumberPattern)
@@ -406,12 +414,15 @@ class ByteStringObject(utils.bytes_type, PdfObject):
     # returns self.
     original_bytes = property(lambda self: self)
 
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         bytearr = self
         if encryption_key:
             bytearr = RC4_encrypt(encryption_key, bytearr)
+        data = utils.hexencode(bytearr)
+        if context and context["record_switch"]:
+            context["interesting_values"]["byte_str"].add(data)
         stream.write(b_("<"))
-        stream.write(utils.hexencode(bytearr))
+        stream.write(data)
         stream.write(b_(">"))
 
 
@@ -444,7 +455,7 @@ class TextStringObject(utils.string_type, PdfObject):
         else:
             raise Exception("no information about original bytes")
 
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         # Try to write the string out as a PDFDocEncoding encoded string.  It's
         # nicer to look at in the PDF file.  Sadly, we take a performance hit
         # here for trying...
@@ -452,10 +463,15 @@ class TextStringObject(utils.string_type, PdfObject):
             bytearr = encode_pdfdocencoding(self)
         except UnicodeEncodeError:
             bytearr = codecs.BOM_UTF16_BE + self.encode("utf-16be")
+
+        # record fuzzing dictory
+        if context and context["record_switch"]:
+            context["interesting_values"]["text_str"].add(bytearr)
+
         if encryption_key:
             bytearr = RC4_encrypt(encryption_key, bytearr)
             obj = ByteStringObject(bytearr)
-            obj.writeToStream(stream, None)
+            obj.writeToStream(stream, None, context)
         else:
             stream.write(b_("("))
             for c in bytearr:
@@ -470,8 +486,10 @@ class NameObject(str, PdfObject):
     delimiterPattern = re.compile(b_(r"\s+|[\(\)<>\[\]{}/%]"))
     surfix = b_("/")
 
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         stream.write(b_(self))
+        if len(b_(self))<64:
+            context["interesting_values"]["str"].add(b_(self))
 
     def readFromStream(stream, pdf):
         debug = False
@@ -543,12 +561,21 @@ class DictionaryObject(dict, PdfObject):
     # Stability: Added in v1.12, will exist for all future v1.x releases.
     xmpMetadata = property(lambda self: self.getXmpMetadata(), None, None)
 
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
+
+        if context and context["record_switch"]:
+            for item in list(self.items()):
+                if item[0] in ("/Length",):
+                    if R.percent(60):
+                        continue
+                if item not in context["interesting_values"]["dict_item"]:
+                    context["interesting_values"]["dict_item"].append(item)
+
         stream.write(b_("<<\n"))
         for key, value in list(self.items()):
-            key.writeToStream(stream, encryption_key)
+            key.writeToStream(stream, encryption_key, context)
             stream.write(b_(" "))
-            value.writeToStream(stream, encryption_key)
+            value.writeToStream(stream, encryption_key, context)
             stream.write(b_("\n"))
         stream.write(b_(">>"))
 
@@ -780,26 +807,26 @@ class StreamObject(DictionaryObject):
         self._data = None
         self.decodedSelf = None
 
-    def writeToStream(self, stream, encryption_key):
-        if isinstance(self, EncodedStreamObject) and False:
-            StreamObject.indexx+=1
-            if StreamObject.indexx !=6:
-                self._writeToStream(stream, encryption_key)
-                return
-            try:
-                self.getData()
-                self.decodedSelf.writeToStream(stream, encryption_key)
-                return
-            except:
-                self._writeToStream(stream, encryption_key)
-                return
-        self._writeToStream(stream,encryption_key)
+    def writeToStream(self, stream, encryption_key, context):
+        # if isinstance(self, EncodedStreamObject) and False:
+        #     StreamObject.indexx+=1
+        #     if StreamObject.indexx !=6:
+        #         self._writeToStream(stream, encryption_key, context)
+        #         return
+        #     try:
+        #         self.getData()
+        #         self.decodedSelf.writeToStream(stream, encryption_key, context)
+        #         return
+        #     except:
+        #         self._writeToStream(stream, encryption_key, context)
+        #         return
+        self._writeToStream(stream,encryption_key, context)
         return
 
 
-    def _writeToStream(self, stream, encryption_key):
+    def _writeToStream(self, stream, encryption_key, context):
         self[NameObject("/Length")] = NumberObject(len(self._data))
-        DictionaryObject.writeToStream(self, stream, encryption_key)
+        DictionaryObject.writeToStream(self, stream, encryption_key, context)
         del self["/Length"]
         stream.write(b_("\nstream\n"))
         data = self._data
@@ -1097,19 +1124,19 @@ class Destination(TreeObject):
     def getDestArray(self):
         return ArrayObject([self.raw_get('/Page'), self['/Type']] + [self[x] for x in ['/Left', '/Bottom', '/Right', '/Top', '/Zoom'] if x in self])
 
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         stream.write(b_("<<\n"))
         key = NameObject('/D')
-        key.writeToStream(stream, encryption_key)
+        key.writeToStream(stream, encryption_key, context)
         stream.write(b_(" "))
         value = self.getDestArray()
-        value.writeToStream(stream, encryption_key)
+        value.writeToStream(stream, encryption_key, context)
 
         key = NameObject("/S")
-        key.writeToStream(stream, encryption_key)
+        key.writeToStream(stream, encryption_key, context)
         stream.write(b_(" "))
         value = NameObject("/GoTo")
-        value.writeToStream(stream, encryption_key)
+        value.writeToStream(stream, encryption_key, context)
 
         stream.write(b_("\n"))
         stream.write(b_(">>"))
@@ -1172,19 +1199,19 @@ class Destination(TreeObject):
 
 
 class Bookmark(Destination):
-    def writeToStream(self, stream, encryption_key):
+    def writeToStream(self, stream, encryption_key, context):
         stream.write(b_("<<\n"))
         for key in [NameObject(x) for x in ['/Title', '/Parent', '/First', '/Last', '/Next', '/Prev'] if x in self]:
-            key.writeToStream(stream, encryption_key)
+            key.writeToStream(stream, encryption_key, context)
             stream.write(b_(" "))
             value = self.raw_get(key)
-            value.writeToStream(stream, encryption_key)
+            value.writeToStream(stream, encryption_key, context)
             stream.write(b_("\n"))
         key = NameObject('/Dest')
-        key.writeToStream(stream, encryption_key)
+        key.writeToStream(stream, encryption_key, context)
         stream.write(b_(" "))
         value = self.getDestArray()
-        value.writeToStream(stream, encryption_key)
+        value.writeToStream(stream, encryption_key, context)
         stream.write(b_("\n"))
         stream.write(b_(">>"))
 

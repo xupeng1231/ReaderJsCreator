@@ -75,7 +75,6 @@ else:
     from hashlib import md5
 import uuid
 
-
 class PdfFileWriter(object):
     """
     This class supports writing PDF files out, given pages produced by another
@@ -442,7 +441,7 @@ class PdfFileWriter(object):
         self._encrypt = self._addObject(encrypt)
         self._encrypt_key = key
 
-    def write(self, stream):
+    def write(self, stream, context):
         """
         Writes the collection of pages added to this object out as a PDF file.
 
@@ -499,7 +498,7 @@ class PdfFileWriter(object):
                 assert len(key) == (len(self._encrypt_key) + 5)
                 md5_hash = md5(key).digest()
                 key = md5_hash[:min(16, len(self._encrypt_key) + 5)]
-            obj.writeToStream(stream, key)
+            obj.writeToStream(stream, key, context)
             stream.write(b_("\nendobj\n"))
 
         # xref table
@@ -522,7 +521,7 @@ class PdfFileWriter(object):
             trailer[NameObject("/ID")] = self._ID
         if hasattr(self, "_encrypt"):
             trailer[NameObject("/Encrypt")] = self._encrypt
-        trailer.writeToStream(stream, None)
+        trailer.writeToStream(stream, None, context)
 
         # eof
         stream.write(b_("\nstartxref\n%s\n%%%%EOF\n" % (xref_location)))
@@ -2826,14 +2825,14 @@ class ContentStream(DecodedStreamObject):
             if operator == b_("INLINE IMAGE"):
                 newdata.write(b_("BI"))
                 dicttext = BytesIO()
-                operands["settings"].writeToStream(dicttext, None)
+                operands["settings"].writeToStream(dicttext, None, None)
                 newdata.write(dicttext.getvalue()[2:-2])
                 newdata.write(b_("ID "))
                 newdata.write(operands["data"])
                 newdata.write(b_("EI"))
             else:
                 for op in operands:
-                    op.writeToStream(newdata, None)
+                    op.writeToStream(newdata, None, None)
                     newdata.write(b_(" "))
                 newdata.write(b_(operator))
             newdata.write(b_("\n"))

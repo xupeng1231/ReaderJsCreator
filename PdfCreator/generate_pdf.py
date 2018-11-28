@@ -4,17 +4,10 @@ import os
 import random
 import time
 from tools import *
+from PyPDF2.pdf import *
+from utils import R, RPools
 
 InputDir = r"G:\pycharm-projects\ReaderJsCreator\PdfCreator\inputs"
-class RPools:
-    sample_num_pool = [1]*10 + [2]*40 + [3]*40 + [4]*10
-    output_numpage_pool = [2]*10 + [3]*15 + [4]*20 + [5]*25 + [6]*15 + [7]*10 + [8]*5
-
-class R:
-    def select(arr):
-        assert isinstance(arr,list)
-        return random.choice(arr)
-    select = staticmethod(select)
 
 def generate(samples, num=1):
     inputs = [PdfFileReader(c) for c in samples]
@@ -38,11 +31,27 @@ def generate(samples, num=1):
         outfilename = "{}_{:01d}_{:08x}.pdf".format(time.strftime("%m_%d_%H_%M_%S"), len(outpages), random.getrandbits(32),)
         outfilename=os.path.join(InputDir,outfilename)
 
+        context={
+            "interesting_values": {
+                "num": set(),
+                "str": set(),
+                "byte_str": set(),
+                "text_str": set(),
+                "float": set(),
+                "dict_item": [],
+            },
+            "record_switch": True,
+            "write_type_stacks": [],
+            "mutate_times": 0,
+        }
+        devnull=StringIO()
+
         outfile = file(outfilename, "wb")
-        output.write(outfile)
+        output.write(devnull, context)
         outfile.close()
 
 def main():
+    random.seed(1)
     usage = "Usage: python generate_pdf.py <sample_dir>"
     sys.argv.append(r"G:\pycharm-projects\ReaderJsCreator\PdfCreator\samples")
     if len(sys.argv) != 2:
