@@ -34,6 +34,7 @@ Implementation of generic PDF objects (dictionary, number, string, and so on)
 __author__ = "Mathieu Fenniak"
 __author_email__ = "biziqe@mathieu.fenniak.net"
 
+import sys
 import re
 from .utils import readNonWhitespace, RC4_encrypt, skipOverComment
 from .utils import b_, u_, chr_, ord_
@@ -43,10 +44,11 @@ from . import filters
 from . import utils
 import decimal
 import codecs
-import sys
 #import debugging
-print __name__
 from PdfCreator.utils import R
+import random
+
+
 
 ObjectPrefix = b_('/<[tf(n%')
 NumberSigns = b_('+-')
@@ -250,7 +252,19 @@ class FloatObject(decimal.Decimal, PdfObject):
     def writeToStream(self, stream, encryption_key, context):
         data = b_(repr(self))
         if context and context["record_switch"]:
+            # record interesting values
             context["interesting_values"]["float"].add(data)
+            # record counts
+            if self.__class__.__name__ not in context["record_counts"]:
+                context["record_counts"][self.__class__.__name__] = 1
+            else:
+                context["record_counts"][self.__class__.__name__] += 1
+
+        # mutate
+        if context and context["mutate_switch"]:
+            if self.__class__ in context["mutate_ratios"] and R.ratio(context["mutate_ratios"][self.__class__]):
+                data = random.choice(context["interesting_values"]["float"])
+                context["mutated_cls_list"].append(self.__class__.__name__)
         stream.write(data)
 
 
@@ -271,7 +285,18 @@ class NumberObject(int, PdfObject):
     def writeToStream(self, stream, encryption_key, context):
         data = b_(repr(self))
         if context and context["record_switch"]:
+            # record interesting values
             context["interesting_values"]["num"].add(data)
+            # record counts
+            if self.__class__.__name__ not in context["record_counts"]:
+                context["record_counts"][self.__class__.__name__] = 1
+            else:
+                context["record_counts"][self.__class__.__name__] += 1
+        # mutate
+        if context and context["mutate_switch"]:
+            if self.__class__ in context["mutate_ratios"] and R.ratio(context["mutate_ratios"][self.__class__]):
+                data = random.choice(context["interesting_values"]["num"])
+                context["mutated_cls_list"].append(self.__class__.__name__)
         stream.write(data)
 
     def readFromStream(stream):
@@ -418,9 +443,22 @@ class ByteStringObject(utils.bytes_type, PdfObject):
         bytearr = self
         if encryption_key:
             bytearr = RC4_encrypt(encryption_key, bytearr)
+
         data = utils.hexencode(bytearr)
         if context and context["record_switch"]:
+            # record interesting values
             context["interesting_values"]["byte_str"].add(data)
+            # record counts
+            if self.__class__.__name__ not in context["record_counts"]:
+                context["record_counts"][self.__class__.__name__] = 1
+            else:
+                context["record_counts"][self.__class__.__name__] += 1
+
+        # mutate
+        if context and context["mutate_switch"]:
+            if self.__class__ in context["mutate_ratios"] and R.ratio(context["mutate_ratios"][self.__class__]):
+                data = random.choice(context["interesting_values"]["byte_str"])
+                context["mutated_cls_list"].append(self.__class__.__name__)
         stream.write(b_("<"))
         stream.write(data)
         stream.write(b_(">"))
@@ -466,7 +504,19 @@ class TextStringObject(utils.string_type, PdfObject):
 
         # record fuzzing dictory
         if context and context["record_switch"]:
+            # record interesting values
             context["interesting_values"]["text_str"].add(bytearr)
+            # record counts
+            if self.__class__.__name__ not in context["record_counts"]:
+                context["record_counts"][self.__class__.__name__] = 1
+            else:
+                context["record_counts"][self.__class__.__name__] += 1
+
+        #mutate
+        if context and context["mutate_switch"]:
+            if self.__class__ in context["mutate_ratios"] and R.ratio(context["mutate_ratios"][self.__class__]):
+                bytearr = random.choice(context["interesting_values"]["text_str"])
+                context["mutated_cls_list"].append(self.__class__.__name__)
 
         if encryption_key:
             bytearr = RC4_encrypt(encryption_key, bytearr)
@@ -487,9 +537,22 @@ class NameObject(str, PdfObject):
     surfix = b_("/")
 
     def writeToStream(self, stream, encryption_key, context):
-        stream.write(b_(self))
-        if len(b_(self))<64:
-            context["interesting_values"]["str"].add(b_(self))
+        data = b_(self)
+        if context and context["record_switch"]:
+            if len(data) < 64:
+                context["interesting_values"]["name_str"].add(data)
+            if self.__class__.__name__ not in context["record_counts"]:
+                context["record_counts"][self.__class__.__name__] = 1
+            else:
+                context["record_counts"][self.__class__.__name__] += 1
+
+        # mutate
+        if context and context["mutate_switch"]:
+            if self.__class__ in context["mutate_ratios"] and R.ratio(context["mutate_ratios"][self.__class__]):
+                data = random.choice(context["interesting_values"]["name_str"])
+                context["mutated_cls_list"].append(self.__class__.__name__)
+        stream.write(data)
+
 
     def readFromStream(stream, pdf):
         debug = False
@@ -562,16 +625,38 @@ class DictionaryObject(dict, PdfObject):
     xmpMetadata = property(lambda self: self.getXmpMetadata(), None, None)
 
     def writeToStream(self, stream, encryption_key, context):
-
         if context and context["record_switch"]:
-            for item in list(self.items()):
-                if item[0] in ("/Length",):
-                    if R.percent(60):
+            # add interesting values
+            for key,value in list(self.items()):
+                if key in ("/Length",):
+                    if R.percent(90):
                         continue
-                if item not in context["interesting_values"]["dict_item"]:
-                    context["interesting_values"]["dict_item"].append(item)
+                if key not in context["interesting_values"]["dict_item"]:
+                    context["interesting_values"]["dict_item"][key]=[value]
+                elif value not in context["interesting_values"]["dict_item"][key]:
+                    context["interesting_values"]["dict_item"][key].append(value)
+            # record counts
+            if self.__class__.__name__ not in context["record_counts"]:
+                context["record_counts"][self.__class__.__name__] = 1
+            else:
+                context["record_counts"][self.__class__.__name__] += 1
+
 
         stream.write(b_("<<\n"))
+
+        # mutate
+        if context and context["mutate_switch"]:
+            if self.__class__ in context["mutate_ratios"] and R.ratio(context["mutate_ratios"][self.__class__]):
+                num_item = random.randint(1,6)
+                keys = random.sample(context["interesting_values"]["dict_item"].keys(),min(num_item,len(context["interesting_values"]["dict_item"])) )
+                items = [(k, random.choice(context["interesting_values"]["dict_item"][k])) for k in keys]
+                for key,value in items:
+                    key.writeToStream(stream, encryption_key, context)
+                    stream.write(b_(" "))
+                    value.writeToStream(stream, encryption_key, context)
+                    stream.write(b_("\n"))
+                context["mutated_cls_list"].append(self.__class__.__name__)
+
         for key, value in list(self.items()):
             key.writeToStream(stream, encryption_key, context)
             stream.write(b_(" "))

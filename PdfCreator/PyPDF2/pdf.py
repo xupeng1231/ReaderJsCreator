@@ -42,10 +42,10 @@ __author_email__ = "biziqe@mathieu.fenniak.net"
 __maintainer__ = "Phaseit, Inc."
 __maintainer_email = "PyPDF2@phaseit.net"
 
+import sys
 import string
 import math
 import struct
-import sys
 import uuid
 from sys import version_info
 if version_info < ( 3, 0 ):
