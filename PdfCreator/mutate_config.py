@@ -1,6 +1,6 @@
 import random
 from PyPDF2.generic import DictionaryObject, FloatObject, NumberObject, TextStringObject, ByteStringObject, NameObject
-from utils import RPools
+from PyPDF2.rutils import RPools
 
 class MutateCls:
     Mutate_cls = (DictionaryObject, FloatObject, NumberObject, TextStringObject, ByteStringObject, NameObject)

@@ -45,7 +45,8 @@ from . import utils
 import decimal
 import codecs
 #import debugging
-from PdfCreator.utils import R
+import os
+from rutils import R
 import random
 
 

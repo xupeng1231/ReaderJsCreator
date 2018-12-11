@@ -3,9 +3,9 @@ from PyPDF2 import PdfFileWriter,PdfFileReader
 import os
 import random
 import time
-from tools import *
+from collections import Counter
 from PyPDF2.pdf import *
-from utils import R, RPools
+from PyPDF2.rutils import R, RPools
 from mutate_config import MutateCls
 
 InputDir = r"G:\pycharm-projects\ReaderJsCreator\PdfCreator\inputs"
@@ -34,7 +34,7 @@ def convert_set_list(context):
         if isinstance(context["interesting_values"][k],set):
             context["interesting_values"][k]=list(context["interesting_values"][k])
 
-def generate(samples, num=1):
+def generate(samples, output_dir, num=5):
     inputs = [PdfFileReader(c) for c in samples]
     outputs = [PdfFileWriter() for c in range(num)]
 
@@ -52,10 +52,6 @@ def generate(samples, num=1):
         outpages = random.sample(input_pages, min(outpage_num, len(input_pages)))
         for outpage in outpages:
             output.addPage(outpage)
-
-        outfilename = "{}_{:01d}_{:08x}.pdf".format(time.strftime("%m_%d_%H_%M_%S"), len(outpages), random.getrandbits(32),)
-        outfilename=os.path.join(InputDir,outfilename)
-
         context={
             "interesting_values": {
                 "num": set(),
@@ -65,7 +61,6 @@ def generate(samples, num=1):
                 "float": set(),
                 "dict_item": {},
             },
-
             "record_switch": True,
             "record_counts": {},
 
@@ -87,33 +82,40 @@ def generate(samples, num=1):
 
         context["record_switch"] = False
         context["mutate_switch"] = True
+        outfilename = "{}_{:01d}_{:08x}.pdf".format(time.strftime("%m_%d_%H_%M_%S"), len(outpages), random.getrandbits(32), )
+        outfilename = os.path.join(output_dir, outfilename)
         outfile = file(outfilename, "wb")
         output.write(outfile, context)
         outfile.close()
-        print outfilename
-        print context["mutated_cls_list"]
+        # print outfilename
+        # print Counter(context["mutated_cls_list"]),
 
 def main():
-    random.seed(1)
-    usage = "Usage: python generate_pdf.py <sample_dir>"
-    sys.argv.append(r"G:\pycharm-projects\ReaderJsCreator\PdfCreator\samples")
-    if len(sys.argv) != 2:
+    # random.seed(1)
+    usage = "Usage: python generate_pdf.py <sample_dir> <output_dir> <num>"
+    if len(sys.argv) != 4:
         print usage
         exit(1)
     sample_dir = sys.argv[1]
+    output_dir = sys.argv[2]
+    num_str = sys.argv[3]
+    if not num_str.isalnum():
+        print "3rd arg is not a num"
+        exit(1)
     if not os.path.isdir(sample_dir):
         print "%s is not a dir" % sample_dir
         exit(1)
+    if not os.path.isdir(output_dir):
+        print "%s is not a dir" % output_dir
+        exit(1)
+    num =int(num_str)
     sample_filename_list = [c for c in os.listdir(sample_dir) if c.endswith(".pdf")]
     if len(sample_filename_list) == 0:
         print "%s sample_dir is empty!" % sample_dir
         exit(1)
-    for iii in range(50):
-        sample_num = R.select(RPools.sample_num_pool)
-        samples = [os.path.join(sample_dir, c) for c in random.sample(sample_filename_list, min(sample_num,len(sample_filename_list)))]
-        print time.time()
-        generate(samples, 5)
-        print time.time()
+    sample_num = R.select(RPools.sample_num_pool)
+    samples = [os.path.join(sample_dir, c) for c in random.sample(sample_filename_list, min(sample_num,len(sample_filename_list)))]
+    generate(samples, output_dir, num)
 
 if __name__ == "__main__":
     main()
