@@ -1,0 +1,35 @@
+!begin lines
+#rawnotes "app.media\nR-align TempVar\nR-canResize TempVar\nR-closeReason TempVar\nR-defaultVisible TempVar\nR-ifOffScreen TempVar\nR-layout TempVar\nR-monitorType TempVar\nR-openCode TempVar\nR-over TempVar\nR-pageEventNames TempVar\nR-raiseCode TempVar\nR-raiseSystem TempVar\nR-renditionType TempVar\nR-status TempVar\nR-version TempVar\nR-windowType TempVar"
+<new TempVar>=<app.media>.align;
+
+<new TempVar>=<app.media>.canResize;
+
+<new TempVar>=<app.media>.closeReason;
+
+<new TempVar>=<app.media>.defaultVisible;
+
+<new TempVar>=<app.media>.ifOffScreen;
+
+<new TempVar>=<app.media>.layout;
+
+<new TempVar>=<app.media>.monitorType;
+
+<new TempVar>=<app.media>.openCode;
+
+<new TempVar>=<app.media>.over;
+
+<new TempVar>=<app.media>.pageEventNames;
+
+<new TempVar>=<app.media>.raiseCode;
+
+<new TempVar>=<app.media>.raiseSystem;
+
+<new TempVar>=<app.media>.renditionType;
+
+<new TempVar>=<app.media>.status;
+
+<new TempVar>=<app.media>.version;
+
+<new TempVar>=<app.media>.windowType;
+
+!end lines

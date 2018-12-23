@@ -8,32 +8,25 @@ set ACRORD32_EXE=C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\Acro
 
 set BASE_FOLDER=G:\pycharm-projects\ReaderJsCreator
 
-set CONFIRM_FOLDER=%BASE_FOLDER%\PdfCreator\confirms
-set CRASH_FOLDER=%BASE_FOLDER%\PdfCreator\crashes
+set CONFIRMS_FOLDER=%BASE_FOLDER%\PdfCreator\confirms
+set CONFIRMED_FOLDER=%BASE_FOLDER%\PdfCreator\confirmed
 
 set CONFIRM_SCRIPT=%BASE_FOLDER%\cmd\confirm.py
 
 :LOOP
-    for %%f in (%CRASH_FOLDER%\*.pdf) do (
+    for %%f in (%CONFIRMS_FOLDER%\*.pdf) do (
         call :confirm %%f
         echo confirm %%~nxf ...
         timeout %TIMEOUT% >nul
-        for %%i in (%CONFIRM_FOLDER%\*.pdf) do (
-            exit /B 0
+        for %%i in (%CONFIRMED_FOLDER%\*.pdf) do (
+			if %%~nxi==%%~nxf (
+				exit /B 0
+			)
         )
         taskkill /F /IM windbg.exe
     )
     goto :LOOP
 
 :confirm :: arg1=testfile_name
-    start "" "%WINDBG_EXE%"  -c ".load pykd;!py %CONFIRM_SCRIPT% %~nx1 %BASE_FOLDER%\PdfCreator\" -o "%ACRORD32_EXE%" "%INPUT_FOLDER%\%~nx1"
-    exit /B 0
-
-
-
-:count_file
-    set path=%~1
-    set local_count=0
-    for %%i in (%path%\*) do set /a local_count+=1
-    set %~2=%local_count%
+    start "" "%WINDBG_EXE%"  -c ".load pykd;!py %CONFIRM_SCRIPT% %~nx1 %CONFIRMS_FOLDER% %CONFIRMED_FOLDER%" -o "%ACRORD32_EXE%" "%CONFIRMS_FOLDER%\%~nx1"
     exit /B 0

@@ -1,4 +1,12 @@
 
-#rawnotes "app\naddAnnot Annotation Annotation_literal"
-<new Annotation>=<app>.addAnnot(<Annotation_literal>);
+#rawnotes "Bookmark\ncreateChild - JString lines-count=10 int-0-10\nexecute\ninsertChild - Bookmark int-0-10\nremove\nsetAction - lines-count=10\n"
+<Bookmark>.createChild(<JString>,<lines count=10>,<int min=0 max=10>);
+
+<Bookmark>.execute();
+
+<Bookmark>.insertChild(<Bookmark>,<int min=0 max=10>);
+
+<Bookmark>.remove();
+
+<Bookmark>.setAction(<lines count=10>);
 

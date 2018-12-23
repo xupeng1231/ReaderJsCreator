@@ -1,0 +1,292 @@
+!begin lines
+<Annotation>.alignment=<int_Annotation_align>;                   # line code
+<new long>=<Annotation>.alignment;
+
+<Annotation>.AP=<string_Annotation_AP>;                    #line code
+<new JString>=<Annotation>.AP;
+
+<Annotation>.arrowBegin=<string_Annotation_arrowBeginEnd>;      #line code
+<new JString>=<Annotation>.arrowBegin;
+
+<Annotation>.arrowEnd=<string_Annotation_arrowBeginEnd> ;        #line code
+<new JString>=<Annotation>.arrowEnd;
+
+<Annotation>.attachIcon=<string_Annotation_attachIcon>  ;        #line code
+<new JString>=<Annotation>.attachIcon;
+
+<Annotation>.author=<JString>;
+<new JString>=<Annotation>.author;
+
+<Annotation>.borderEffectIntensity=<int>;
+<new int>=<Annotation>.borderEffectIntensity;
+
+<Annotation>.borderEffectStyle=<string_Annotation_borderEffectStyle>;
+<new JString>=<Annotation>.borderEffectStyle;
+
+<Annotation>.callout=<array type=int minlen=4 maxlen=6 len_multiple=2>;
+<new array>=<Annotation>.callout;
+
+<Annotation>.caretSymbol=<string_Annotation_caretSymbol>;
+<new JString>=<Annotation>.caretSymbol;
+
+<Annotation>.contents=<JString>;
+<new JString>=<Annotation>.contents;
+
+;;;<Annotation>.creationDate=<Date>;                                    #readonly property
+<new Date>=<Annotation>.creationDate;
+
+<Annotation>.dash=<array type=int len=2>
+<new Int32Array>=<Annotation>.dash;
+
+<Annotation>.delay=<boolean>;
+<new boolean>=<Annotation>.delay;
+
+;;;<Annotation>.doc=<Doc>;                                              #readonly property
+<new Doc>=<Annotation>.doc;
+
+<Annotation>.doCaption=<boolean>;
+<new boolean>=<Annotation>.doCaption;
+
+<Annotation>.fillColor=<Color>;
+<new Color>=<Annotation>.fillColor;
+
+!begin helperlines
+<new array_ints>=<array type=int len=2 >;
+!begin lines
+<Annotation>.gestures=<array type=array_ints minlen=0 maxlen=64>;
+<new TempVar>=<Annotation>.gestures;
+
+<Annotation>.hidden=<boolean>;
+<new boolean>=<Annotation>.hidden;
+
+<Annotation>.inReplyTo=<JString>;
+<new JString>=<Annotation>.inReplyTo
+
+<Annotation>.intent=<string_Annotation_intent>;
+<new JString>=<Annotation>.intent;
+
+<Annotation>.leaderExtend=<int>;
+<new long>=<Annotation>.leaderExtend;
+
+<Annotation>.leaderLength=<int>;
+<new long>=<Annotation>.leaderLength;
+
+<Annotation>.lineEnding=<string_Annotation_lineEnding>;
+<new JString>=<Annotation>.lineEnding;
+
+<Annotation>.lock=<boolean>;
+<new boolean>=<Annotation>.lock;
+
+<Annotation>.modDate=<Date>;
+<new Date>=<Annotation>.modData;
+
+<Annotation>.name=<JString>;
+<new JString>=<Annotation>.name;                              # string_Annotation_name used for this.getAnnot()'s second parameter
+
+<Annotation>.noteIcon=<string_Annotation_noteIcon>;
+<new JString>=<Annotation>.noteIcon;
+
+<Annotation>.noView=<boolean>;
+<new boolean>=<Annotation>.noView;
+
+<Annotation>.opacity=<float min=0 max=1>;
+<new float>=<Annotation>.opacity;
+
+<Annotation>.page=<int min=0 max=30>;
+<new int>=<Annotation>.page;
+
+<Annotation>.point=[<int>,<int>];
+<new array>=<Annotation>.point;
+
+!begin helperlines
+<new array_2int>=<array type=int len=2>;
+!begin lines
+<Annotation>.points=<array type=array_2int len=2>;
+<new array>=<Annotation>.points;
+
+<Annotation>.popupOpen=<boolean>;
+<new boolean>=<Annotation>.popupOpen;
+
+<Annotation>.popupRect=<array type=int len=4>;
+<new array>=<Annotation>.popupRect;
+
+<Annotation>.print=<boolean>;
+<new boolean>=<Annotation>.print;
+
+<Annotation>.quads=<array type=int minlen=0 len_multiple=8 maxlen=64>;
+<new array>=<Annotation>.quads;
+
+<Annotation>.rect=<array type=int len=4>;
+<new array>=<Annotation>.rect;
+
+<Annotation>.readOnly=<boolean>;
+<new boolean>=<Annotation>.readOnly;
+
+<Annotation>.refType=<string_Annotation_refType>;
+<new JString>=<Annotation>.refType;
+
+<Annotation>.richContents=<array type=Span minlen=0 maxlen=32>;
+<new array>=<Annotation>.richContents;
+
+<Annotation>.richDefaults=<Span>;
+<new Span>=<Annotation>.richDefaults;
+
+<Annotation>.rotate=<int>;
+<new int>=<Annotation>.rotate;
+
+<Annotation>.seqNum=<int>;
+<new int>=<Annotation>.seqNum;
+
+<Annotation>.soundIcon=<JString>;
+<new JString>=<Annotation>.soundIcon;
+
+<Annotation>.state=<string_Annotation_state>;
+<new JString>=<Annotation>.state;
+
+<Annotation>.stateModel=<string_Annotation_stateModel>;
+<new JString>=<Annotation>.stateModel;
+
+<Annotation>.strokeColor=<Color>;
+<new Color>=<Annotation>.strokeColor;
+
+<Annotation>.style=<string_Annotation_style>;
+<new JString>=<Annotation>.style;
+
+<Annotation>.subject=<JString>;
+<new JString>=<Annotation>.subject;
+
+<Annotation>.textFont=<Font>;
+<new Font>=<Annotation>.textFont;
+
+<Annotation>.textSize=<int min=0 max=144>;
+<new int>=<Annotation>.textSize;
+
+<Annotation>.toggleNoView=<boolean>;
+<new boolean>=<Annotation>.toggleNoView;
+
+<Annotation>.type=<string_Annotation_type>;
+<new JString>=<Annotation>.type;
+
+!begin helperlines
+<new array_nint>=<array type=int minlen=0>;
+!begin lines
+<Annotation>.vertices=<array type=array_nint minlen=0>;
+<new array>=<Annotation>.vertices;
+
+<Annotation>.width=<int min=0 max=1>;
+<new int>=<Annotation>.width;
+
+<Annotation>.destroy();
+
+### recursive
+<new TempVar>=<Annotation>.getProps();
+
+### incompleted
+<new array>=<Annotation>.getStateInModel(<string_Annotation_stateModel>);
+### incompleted recursive
+<new Annotation>=<Annotation>.setProps(<Annotation>);
+<Annotation>.transitionToState(<JString>,<JString>);
+
+
+!end lines
+<string_Annotation_type>="Text"
+<string_Annotation_type>="FreeText"
+<string_Annotation_type>="Line"
+<string_Annotation_type>="Square"
+<string_Annotation_type>="Circle"
+<string_Annotation_type>="Polygon"
+<string_Annotation_type>="PolyLine"
+<string_Annotation_type>="Highlight"
+<string_Annotation_type>="Underline"
+<string_Annotation_type>="Squiggly"
+<string_Annotation_type>="StrikeOut"
+<string_Annotation_type>="Stamp"
+<string_Annotation_type>="Caret"
+<string_Annotation_type>="Ink"
+<string_Annotation_type>="FileAttachment"
+<string_Annotation_type>="Sound"
+<int_Annotation_align>=0
+<int_Annotation_align>=1
+<int_Annotation_align>=2
+<string_Annotation_AP>="Approved"
+<string_Annotation_AP>="AsIs"
+<string_Annotation_AP>="Confidential"
+<string_Annotation_AP>="Departmental"
+<string_Annotation_AP>="Draft"
+<string_Annotation_AP>="Experimental"
+<string_Annotation_AP>="Expired"
+<string_Annotation_AP>="Final"
+<string_Annotation_AP>="ForComment"
+<string_Annotation_AP>="ForPublicRelease"
+<string_Annotation_AP>="NotApproved"
+<string_Annotation_AP>="NotForPublicRelease"
+<string_Annotation_AP>="Sold"
+<string_Annotation_AP>="TopSecret"
+<string_Annotation_arrowBeginEnd>="None"
+<string_Annotation_arrowBeginEnd>="OpenArrow"
+<string_Annotation_arrowBeginEnd>="ClosedArrow"
+<string_Annotation_arrowBeginEnd>="ROpenArrow"
+<string_Annotation_arrowBeginEnd>="RClosedArrow"
+<string_Annotation_arrowBeginEnd>="Butt"
+<string_Annotation_arrowBeginEnd>="Diamond"
+<string_Annotation_arrowBeginEnd>="Circle"
+<string_Annotation_arrowBeginEnd>="Square"
+<string_Annotation_arrowBeginEnd>="Slash"
+<string_Annotation_attachIcon>="Paperclip"
+<string_Annotation_attachIcon>="PushPin"
+<string_Annotation_attachIcon>="Graph"
+<string_Annotation_attachIcon>="Tag"
+
+<string_Annotation_borderEffectStyle>=""
+<string_Annotation_borderEffectStyle>="C"
+
+<string_Annotation_caretSymbol>=""
+<string_Annotation_caretSymbol>="P"
+<string_Annotation_caretSymbol>="S"
+<string_Annotation_intent>="FreeTextCallout"
+<string_Annotation_intent>="PolygonCloud"
+<string_Annotation_intent>="LineArrow"
+<string_Annotation_intent>="LineDimension"
+<string_Annotation_lineEnding>="None"
+<string_Annotation_lineEnding>="OpenArrow"
+<string_Annotation_lineEnding>="ClosedArrow"
+<string_Annotation_lineEnding>="ROpenArrow"
+<string_Annotation_lineEnding>="RClosedArrow"
+<string_Annotation_lineEnding>="Butt"
+<string_Annotation_lineEnding>="Diamond"
+<string_Annotation_lineEnding>="Circle"
+<string_Annotation_lineEnding>="Square"
+<string_Annotation_lineEnding>="Slash"
+<string_Annotation_noteIcon>="Check"
+<string_Annotation_noteIcon>="Circle"
+<string_Annotation_noteIcon>="Comment"
+<string_Annotation_noteIcon>="Cross"
+<string_Annotation_noteIcon>="Help"
+<string_Annotation_noteIcon>="Insert"
+<string_Annotation_noteIcon>="Key"
+<string_Annotation_noteIcon>="NewParagraph"
+<string_Annotation_noteIcon>="Note"
+<string_Annotation_noteIcon>="Paragraph"
+<string_Annotation_noteIcon>="RightArrow"
+<string_Annotation_noteIcon>="RightPointer"
+<string_Annotation_noteIcon>="Star"
+<string_Annotation_noteIcon>="UpArrow"
+<string_Annotation_noteIcon>="UpLeftArrow"
+
+<string_Annotation_refType>="R"
+<string_Annotation_refType>="Group"
+
+<string_Annotation_state>="Marked"
+<string_Annotation_state>="Unmarked"
+<string_Annotation_state>="Accepted"
+<string_Annotation_state>="Rejected"
+<string_Annotation_state>="Cancelled"
+<string_Annotation_state>="Completed"
+<string_Annotation_state>="None"
+
+<string_Annotation_stateModel>="Marked"
+<string_Annotation_stateModel>="Review"
+
+<string_Annotation_style>="S"
+<string_Annotation_style>="D"
+

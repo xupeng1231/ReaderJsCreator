@@ -1,2 +1,6 @@
-app
-addAnnot Annotation Annotation_literal
+Bookmark
+createChild - JString lines-count=10 int-0-10
+execute
+insertChild - Bookmark int-0-10
+remove
+setAction - lines-count=10

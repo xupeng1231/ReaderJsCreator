@@ -38,6 +38,8 @@ _INT_RANGES = {
     'uint64': [0, 18446744073709551615]
 }
 
+
+
 _INT_FORMATS = {
     'int': 'i',
     'int32': 'i',
@@ -57,7 +59,8 @@ _NONINTERESTING_TYPES = [
     'JString',
     'boolean',
     'float',
-    'double'
+    'double',
+    'TempVar'
 ]
 
 
@@ -113,6 +116,8 @@ class Grammar(object):
         self._interesting_line_prob = 0.9
         self._max_vars_of_same_type = 5
 
+        self._arr_change_length_prob = 0.9
+
         self._inheritance = {}
 
         self._cssgrammar = None
@@ -146,7 +151,7 @@ class Grammar(object):
             'htmlsafestring': self._generate_html_string,
             'hex': self._generate_hex,
             'import': self._generate_import,
-            'lines': self._generate_lines
+            'lines': self._generate_lines,
         }
 
         self._command_handlers = {
@@ -264,6 +269,8 @@ class Grammar(object):
         num_lines = self._string_to_int(tag['count'])
         return self._generate_code(num_lines)
 
+
+
     def _generate_code(self, num_lines, initial_variables=[], last_var=0):
         """Generates a given number of lines of code."""
 
@@ -293,11 +300,11 @@ class Grammar(object):
                 context = tmp_context
             except RecursionError as e:
                 print('Warning: ' + str(e))
-        for i in range(len(context['lines']) // 100):
-            context['lines'].insert(
-                random.randint(0, len(context['lines'])),
-                'freememory();'
-            )
+        # for i in range(len(context['lines']) // 100):
+        #     context['lines'].insert(
+        #         random.randint(0, len(context['lines'])),
+        #         'freememory();'
+        #     )
         if not self._line_guard:
             guarded_lines = context['lines']
         else:
@@ -366,6 +373,29 @@ class Grammar(object):
         # Select a creator according to the cdf
         idx = bisect.bisect_left(cdf, random.random(), 0, len(cdf))
         return creators[idx]
+
+    def _generate_array(self, tag, context, recursion_depth=0, force_nonrecursive=False):
+        type = tag['type']
+        change_length = random.random() >self._arr_change_length_prob
+        if 'len' in tag :
+            length = self._string_to_int(tag['len'])
+            if change_length:
+                length = random.randint(0, 2*length)
+        elif "minlen" in tag and 'maxlen' in tag:
+            minlen = self._string_to_int(tag['minlen'])
+            maxlen = self._string_to_int(tag['maxlen'])
+            if not change_length:
+                length = random.randint(minlen, maxlen)
+            else:
+                length = random.randint(maxlen, 2*maxlen)
+        else:
+                if not change_length:
+                    length = random.randint(0, 10)
+                else:
+                    length = random.randint(0, 20)
+
+        vars =[self._generate(type,context,recursion_depth+1,force_nonrecursive) for _ in range(length)]
+        return '[{}]'.format(','.join(vars))
 
     def _generate(self, symbol, context,
                   recursion_depth=0, force_nonrecursive=False):
@@ -462,6 +492,7 @@ class Grammar(object):
         new_vars = []
         ret_vars = []
         ret_parts = []
+        append_lines=[];
         for part in rule['parts']:
             if 'id' in part:
                 if part['id'] in variable_ids:
@@ -474,11 +505,19 @@ class Grammar(object):
                 var_type = part['tagname']
                 context['lastvar'] += 1
                 var_name = self._var_format % context['lastvar']
-                new_vars.append({'name': var_name, 'type': var_type})
-                # print var_name
-                # print context['lastvar']
-                if var_type == symbol:
-                    ret_vars.append(var_name)
+                if var_type != "array":
+                    new_vars.append({'name': var_name, 'type': var_type})
+                    if var_type == symbol:
+                        ret_vars.append(var_name)
+                else:
+                    for _ in range(2):
+                        context['lastvar'] += 1
+                        element_name = self._var_format % context['lastvar']
+                        append_lines.append('/* newvar{' + element_name + ':' + part['type'] + '} */ var ' +
+                                            element_name +'={}[{:d}%{}.length]'.format(var_name,random.randint(1000,10000),var_name))
+                        new_vars.append({'name':element_name, 'type': part['type']})
+                        if part['type'] == symbol:
+                            ret_vars.append(element_name)
                 expanded = '/* newvar{' + var_name + ':' + var_type + '} */ var ' + var_name
             elif part['tagname'] in self._constant_types:
                 expanded = self._constant_types[part['tagname']]
@@ -493,6 +532,24 @@ class Grammar(object):
                     context,
                     ''
                 )
+            elif 'array' == part['tagname']:
+                try:
+                    expanded = self._generate(
+                        part,
+                        context,
+                        recursion_depth + 1,
+                        force_nonrecursive
+                    )
+                except RecursionError as e:
+                    if not force_nonrecursive:
+                        expanded = self._generate(
+                            part,
+                            context,
+                            recursion_depth + 1,
+                            True
+                        )
+                    else:
+                        raise RecursionError(e)
             else:
                 try:
                     expanded = self._generate(
@@ -541,6 +598,7 @@ class Grammar(object):
             return filed_rule
         else:
             context['lines'].append(filed_rule)
+            context['lines'].extend(append_lines)
             context['lines'].extend(additional_lines)
             if symbol == 'line':
                 return filed_rule
@@ -589,7 +647,7 @@ class Grammar(object):
             else:
                 # For type=code multiple variables may be created
                 for tag in creator['creates']:
-                    if tag['tagname'] == symbol:
+                    if tag['tagname'] == symbol or ('array' == tag['tagname'] and tag['type'] ==symbol):
                         create_tag = tag
                         break
             if 'p' in create_tag:
@@ -695,6 +753,8 @@ class Grammar(object):
 
         for tag in rule['creates']:
             tag_name = tag['tagname']
+            if tag_name == "array":
+                tag_name = tag["type"]
             if tag_name in _NONINTERESTING_TYPES:
                 continue
             if tag_name in self._creators:
@@ -752,6 +812,8 @@ class Grammar(object):
 
         # Store the rule in appropriate sets.
         create_tag_name = rule['creates']['tagname']
+        if create_tag_name == "array":
+            create_tag_name = rule["creates"]["type"]
         if create_tag_name in self._creators:
             self._creators[create_tag_name].append(rule)
         else:

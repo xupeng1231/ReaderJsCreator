@@ -1,0 +1,8 @@
+Bookmark
+R-children array-type=Bookmark
+R-color array=Color
+R-doc Doc
+R-name JString
+R-open boolean
+R-parent Bookmark
+R-style int
