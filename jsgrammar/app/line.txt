@@ -1,10 +1,6 @@
 
 #rawnotes "app\n#privileged readonly\nactiveDocs array-Doc\ncalculate boolean\nconstants app_constants\nfocusRect boolean\n#readonly\nformsVersion int\nfromPDFConverters array\n#readonly\nfs FullScreen\nfullscreen boolean\nlanguage string CHS CHT DAN DEU ENU ESP FRA ITA KOR JPN NLD NOR PTB SUO SVE\n#app.media treated as a unique class\nmedia\nmonitors Monitors\n#readonly\nnumPlugIns int\nopenInPlace boolean\n#readonly\nplatform string WIN MAC UNIX\nplugIns Array_PlugIn\nprintColorProfiles Array_String_ColorProfile\n#readonly\n-printerNames array-JString\nruntimeHighlight boolean\n-runtimeHighlightColor array-Color\n#readonly\nthermometer Thermometer\ntoolbar boolean\ntoolbarHorizontal boolean\ntoolbarVertical boolean\n#readonly\nviewerType string Reader Exchange Exchange-Pro\n#readonly\n-viewerVariation string Reader Fill-In Business Tools Full\n#readonly\nviewerVersion int"
 
-#privileged readonly
-<app>.activeDocs=<array type=Doc>;
-<new array type=Doc>=<app>.activeDocs;
-
 <app>.calculate=<boolean>;
 <new boolean>=<app>.calculate;
 
@@ -19,7 +15,7 @@
 <app>.formsVersion=<int>;
 <new int>=<app>.formsVersion;
 
-<app>.fromPDFConverters=<array type=JString>;
+<app>.fromPDFConverters=<array elemtype=JString>;
 <new array>=<app>.fromPDFConverters;
 
 #readonly
@@ -53,20 +49,16 @@
 <new array>=<app>.plugIns;
 
 !readonly
-;;;;<app>.printColorProfiles=<array type=string minlen=2 maxlen=10>;
-<new array>=<app>.printColorProfiles;
+<new array elemtype=JString>=<app>.printColorProfiles;
 
-#readonly
-# ****-printerNames array-JString****
-<app>.printerNames=<array type=JString>;
-<new array>=<app>.printerNames;
+<new array elemtype=JString>=<app>.printerNames;
 
 <app>.runtimeHighlight=<boolean>;
 <new boolean>=<app>.runtimeHighlight;
 
 # ****-runtimeHighlightColor array-Color****
-<app>.runtimeHighlightColor=<array type=Color>;
-<new array>=<app>.runtimeHighlightColor;
+<app>.runtimeHighlightColor=<array elemtype=Color>;
+<new array elemtype=Color>=<app>.runtimeHighlightColor;
 
 #readonly
 ;;<app>.thermometer=<Thermometer>;
@@ -120,13 +112,13 @@
 
 # ****--popUpMenuEx -****
 
-<app>.removeToolButton(<string>);
+<app>.removeToolButton(<JString>);
 
 # ****--response****
 
-<new oInterval>=<app>.setInterval(<lines count=2>,<int min=100 max=2000>);
+<new oInterval>=<app>.setInterval("<function40>();",<int min=100 max=2000>);
 
-<new oTimeOut>=<app>.setTimeOut(<lines count=2>,<int min=100 max=2000>);
+<new oTimeOut>=<app>.setTimeOut("<function40>();",<int min=100 max=2000>);
 
 !end lines
 <string_app_viewerType>="Reader"

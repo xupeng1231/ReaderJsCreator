@@ -1,0 +1,64 @@
+!begin lines
+<Span>.alignment=<string_Span_alignment>;
+<new JString>=<Span>.alignment;
+
+<Span>.fontFamily=[<string_Span_fontFamily>,<string_Span_fontFamily>];
+<new array elemtype=JString>=<Span>.fontFamily;
+
+<Span>.fontStretch=<string_Span_fontStretch>;
+<new JString>=<Span>.fontStretch;
+
+<Span>.fontStyle=<string_Span_fontStyle>;
+<new JString>=<Span>.fontStyle;
+
+<Span>.fontWeight=<int min=0 max=1000>;
+<new int>=<Span>.fontWeight;
+
+<Span>.strikethrough=<boolean>;
+<new boolean>=<Span>.strikethrough;
+
+<Span>.subscript=<boolean>;
+<new boolean>=<Span>.subscript;
+
+<Span>.superscript=<boolean>;
+<new boolean>=<Span>.superscript;
+
+<Span>.text=<JString>;
+<new JString>=<Span>.text;
+
+<Span>.textColor=<Color>;
+<new Color>=<Span>.textColor;
+
+<Span>.textSize=<int>;
+<new int>=<Span>.textSize;
+
+<Span>.underline=<boolean>;
+<new boolean>=<Span>.underline;
+
+<new Span>={<string_Span_alignment format=alignment:{},> <array elemtype=string_Span_fontFamily len=2 format=fontFamily:{},> <string_Span_fontStretch format=fontStretch:{},> <string_Span_fontStyle format=fontStyle:{},> <int min=0 max=1000 format=fontWeight:{},> <boolean format=strikethrough:{},> <boolean format=subscript:{},> <boolean format=superscript:{},> <JString format=text:{},> <array elemtype=Color minlen=1 maxlen=10 format=textColor:{},> <int min=0 max=30 format=textSize:{},> <boolean format=underline:{},>}
+
+!end lines
+<string_Span_alignment>="left"
+<string_Span_alignment>="center"
+<string_Span_alignment>="right"
+
+<string_Span_fontFamily>="symbol"
+<string_Span_fontFamily>="serif"
+<string_Span_fontFamily>="sans-serif"
+<string_Span_fontFamily>="cursive"
+<string_Span_fontFamily>="monospace"
+<string_Span_fontFamily>="fantasy"
+
+<string_Span_fontStretch>="ultra-condensed"
+<string_Span_fontStretch>="extra-condensed"
+<string_Span_fontStretch>="condensed"
+<string_Span_fontStretch>="semi-condensed"
+<string_Span_fontStretch>="normal"
+<string_Span_fontStretch>="semi-expanded"
+<string_Span_fontStretch>="expanded"
+<string_Span_fontStretch>="extra-expanded"
+<string_Span_fontStretch>="ultra-expanded"
+
+
+<string_Span_fontStyle>="italic"
+<string_Span_fontStyle>="normal"

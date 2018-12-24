@@ -1,2 +1,23 @@
 !begin lines
-<new Bookmark nonrecursive>=this.bookmarkRoot
+<new Bookmark nonrecursive>=this.bookmarkRoot;
+
+this.addAnnot(<Annot_literal>);this.addAnnot(<Annot_literal>);this.addAnnot(<Annot_literal>);<new array elemtype=Annotation>=this.getAnnots();
+
+
+
+
+
+
+
+
+!begin helperlines
+<new function>=function(){<lines count=20>}
+<new function10>=function(){<lines count=10>}
+<new function20>=function(){<lines count=20>}
+<new function40>=function(){<lines count=40>}
+<new function60>=function(){<lines count=60>}
+<new function80>=function(){<lines count=80>}
+!end lines
+
+<Point>=[<int min=0 max=2000>,<int min=0 max=2000>]
+<Annot_literal>={<string_Annotation_type format=type:{},> <int min=0 max=3 format=page:{},> <JString format=author:{}, optional> <Point format=point:{},> <Color format=strokeColor:{},> <JString format=contents:{},> <JString format=noteIcon:{},> <array elemtype=int len=4 format=rect:{},> <array elemtype=Point minlen=2 maxlen=100 format=gestures:{},> <int min=1 max=100 format=width:{},>}

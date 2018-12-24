@@ -1,8 +1,8 @@
 !begin lines
 #rawnotes "Bookmark\nR-children array-type=Bookmark\nR-color array=Color\nR-doc Doc\nR-name JString\nR-open boolean\nR-parent Bookmark\nR-style int\n"
-<new array type=Bookmark>=<Bookmark>.children;
+<new array elemtype=Bookmark>=<Bookmark>.children;
 
-<new array type=Color>=<Bookmark>.color;
+<new array elemtype=Color>=<Bookmark>.color;
 
 <new Doc>=<Bookmark>.doc;
 
@@ -24,6 +24,6 @@
 
 <Bookmark>.remove();
 
-<Bookmark>.setAction(<lines count=10>);
+<Bookmark>.setAction("<function>();");
 
 !end lines

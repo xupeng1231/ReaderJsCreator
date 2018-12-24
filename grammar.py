@@ -60,7 +60,8 @@ _NONINTERESTING_TYPES = [
     'boolean',
     'float',
     'double',
-    'TempVar'
+    'TempVar',
+    'int',
 ]
 
 
@@ -117,6 +118,7 @@ class Grammar(object):
         self._max_vars_of_same_type = 5
 
         self._arr_change_length_prob = 0.9
+        self._attr_optional_prob = 0.7
 
         self._inheritance = {}
 
@@ -375,8 +377,8 @@ class Grammar(object):
         return creators[idx]
 
     def _generate_array(self, tag, context, recursion_depth=0, force_nonrecursive=False):
-        type = tag['type']
-        change_length = random.random() >self._arr_change_length_prob
+        type = tag['elemtype']
+        change_length = random.random() > self._arr_change_length_prob
         if 'len' in tag :
             length = self._string_to_int(tag['len'])
             if change_length:
@@ -394,8 +396,13 @@ class Grammar(object):
                 else:
                     length = random.randint(0, 20)
 
-        vars =[self._generate(type,context,recursion_depth+1,force_nonrecursive) for _ in range(length)]
+        if type in self._built_in_types:
+            vars = [self._built_in_types[type]({'tagname':type}) for _ in range(length)]
+        else:
+            vars =[self._generate(type, context, recursion_depth+1, force_nonrecursive) for _ in range(length)]
         return '[{}]'.format(','.join(vars))
+
+
 
     def _generate(self, symbol, context,
                   recursion_depth=0, force_nonrecursive=False):
@@ -494,6 +501,9 @@ class Grammar(object):
         ret_parts = []
         append_lines=[];
         for part in rule['parts']:
+            if "optional" in part and random.random() > self._attr_optional_prob:
+                continue
+
             if 'id' in part:
                 if part['id'] in variable_ids:
                     ret_parts.append(variable_ids[part['id']])
@@ -513,11 +523,12 @@ class Grammar(object):
                     for _ in range(2):
                         context['lastvar'] += 1
                         element_name = self._var_format % context['lastvar']
-                        append_lines.append('/* newvar{' + element_name + ':' + part['type'] + '} */ var ' +
+                        append_lines.append('/* newvar{' + element_name + ':' + part['elemtype'] + '} */ var ' +
                                             element_name +'={}[{:d}%{}.length]'.format(var_name,random.randint(1000,10000),var_name))
-                        new_vars.append({'name':element_name, 'type': part['type']})
-                        if part['type'] == symbol:
+                        new_vars.append({'name':element_name, 'type': part['elemtype']})
+                        if part['elemtype'] == symbol:
                             ret_vars.append(element_name)
+                    append_lines
                 expanded = '/* newvar{' + var_name + ':' + var_type + '} */ var ' + var_name
             elif part['tagname'] in self._constant_types:
                 expanded = self._constant_types[part['tagname']]
@@ -534,7 +545,7 @@ class Grammar(object):
                 )
             elif 'array' == part['tagname']:
                 try:
-                    expanded = self._generate(
+                    expanded = self._generate_array(
                         part,
                         context,
                         recursion_depth + 1,
@@ -542,7 +553,7 @@ class Grammar(object):
                     )
                 except RecursionError as e:
                     if not force_nonrecursive:
-                        expanded = self._generate(
+                        expanded = self._generate_array(
                             part,
                             context,
                             recursion_depth + 1,
@@ -579,7 +590,8 @@ class Grammar(object):
                     context,
                     expanded
                 )
-
+            if "format" in part:
+                expanded = part["format"].format(expanded)
             ret_parts.append(expanded)
 
         # Add all newly created variables to the context
@@ -647,7 +659,7 @@ class Grammar(object):
             else:
                 # For type=code multiple variables may be created
                 for tag in creator['creates']:
-                    if tag['tagname'] == symbol or ('array' == tag['tagname'] and tag['type'] ==symbol):
+                    if tag['tagname'] == symbol or ('array' == tag['tagname'] and tag['elemtype'] ==symbol):
                         create_tag = tag
                         break
             if 'p' in create_tag:
@@ -754,7 +766,7 @@ class Grammar(object):
         for tag in rule['creates']:
             tag_name = tag['tagname']
             if tag_name == "array":
-                tag_name = tag["type"]
+                tag_name = tag['elemtype']
             if tag_name in _NONINTERESTING_TYPES:
                 continue
             if tag_name in self._creators:
@@ -813,7 +825,7 @@ class Grammar(object):
         # Store the rule in appropriate sets.
         create_tag_name = rule['creates']['tagname']
         if create_tag_name == "array":
-            create_tag_name = rule["creates"]["type"]
+            create_tag_name = rule["creates"]["elemtype"]
         if create_tag_name in self._creators:
             self._creators[create_tag_name].append(rule)
         else:

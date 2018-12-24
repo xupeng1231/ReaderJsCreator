@@ -5,7 +5,7 @@
 
 <new TempVar>=<Annot3D>.context3D;
 
-<new array>=<Annot3D>.innerRect;
+<new array elemtype=int>=<Annot3D>.innerRect;
 
 <new JString>=<Annot3D>.name;
 
@@ -13,5 +13,5 @@
 <new int>=<Annot3D>.page;
 
 #incomplete
-<Annot3D>.rect=<array type=int len=4>;
+<Annot3D>.rect=<array elemtype=int len=4>;
 <new array>=<Annot3D>.rect;

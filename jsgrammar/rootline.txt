@@ -1,3 +1,5 @@
+!include jsgrammar\Annotation\line.txt
 !include jsgrammar\Doc\line.txt
 !include jsgrammar\Bookmark\line.txt
 !include jsgrammar\common.txt
+!include jsgrammar\Span\line.txt

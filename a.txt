@@ -1,8 +1,13 @@
-Bookmark
-R-children array-type=Bookmark
-R-color array=Color
-R-doc Doc
-R-name JString
-R-open boolean
-R-parent Bookmark
-R-style int
+Span
+alignment string left center right
+fontFamily array symbol serif sans-serif cursive monospace fantasy
+fontStretch string ultra-condensed extra-condensed condensed semi-condensed normal semi-expanded expanded extra-expanded ultra-expanded
+fontStyle string italic normal
+fontWeight int
+strikethrough boolean
+subscript boolean
+superscript boolean
+text string
+textColor Color
+textSize int
+underline boolean

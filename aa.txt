@@ -1,16 +1,58 @@
 
-#rawnotes "Bookmark\nR-children array-type=Bookmark\nR-color array=Color\nR-doc Doc\nR-name JString\nR-open boolean\nR-parent Bookmark\nR-style int\n"
-<new array type=type=Bookmark>=<Bookmark>.children;
+#rawnotes "Span\nalignment string left center right\nfontFamily array symbol serif sans-serif cursive monospace fantasy\nfontStretch string ultra-condensed extra-condensed condensed semi-condensed normal semi-expanded expanded extra-expanded ultra-expanded\nfontStyle string italic normal\nfontWeight int\nstrikethrough boolean\nsubscript boolean\nsuperscript boolean\ntext string\ntextColor Color\ntextSize int\nunderline boolean\n"
+<Span>.alignment=<string_Span_alignment>;
+<new JString>=<Span>.alignment;
+<string_Span_alignment>="left"
+<string_Span_alignment>="center"
+<string_Span_alignment>="right"
 
-<new array=Color>=<Bookmark>.color;
+<Span>.fontFamily=<array_Span_fontFamily>;
+<new array>=<Span>.fontFamily;
+<array_Span_fontFamily>=symbol
+<array_Span_fontFamily>=serif
+<array_Span_fontFamily>=sans-serif
+<array_Span_fontFamily>=cursive
+<array_Span_fontFamily>=monospace
+<array_Span_fontFamily>=fantasy
 
-<new Doc>=<Bookmark>.doc;
+<Span>.fontStretch=<string_Span_fontStretch>;
+<new JString>=<Span>.fontStretch;
+<string_Span_fontStretch>="ultra-condensed"
+<string_Span_fontStretch>="extra-condensed"
+<string_Span_fontStretch>="condensed"
+<string_Span_fontStretch>="semi-condensed"
+<string_Span_fontStretch>="normal"
+<string_Span_fontStretch>="semi-expanded"
+<string_Span_fontStretch>="expanded"
+<string_Span_fontStretch>="extra-expanded"
+<string_Span_fontStretch>="ultra-expanded"
 
-<new JString>=<Bookmark>.name;
+<Span>.fontStyle=<string_Span_fontStyle>;
+<new JString>=<Span>.fontStyle;
+<string_Span_fontStyle>="italic"
+<string_Span_fontStyle>="normal"
 
-<new boolean>=<Bookmark>.open;
+<Span>.fontWeight=<int>;
+<new int>=<Span>.fontWeight;
 
-<new Bookmark>=<Bookmark>.parent;
+<Span>.strikethrough=<boolean>;
+<new boolean>=<Span>.strikethrough;
 
-<new int>=<Bookmark>.style;
+<Span>.subscript=<boolean>;
+<new boolean>=<Span>.subscript;
+
+<Span>.superscript=<boolean>;
+<new boolean>=<Span>.superscript;
+
+<Span>.text=<string>;
+<new JString>=<Span>.text;
+
+<Span>.textColor=<Color>;
+<new Color>=<Span>.textColor;
+
+<Span>.textSize=<int>;
+<new int>=<Span>.textSize;
+
+<Span>.underline=<boolean>;
+<new boolean>=<Span>.underline;
 
