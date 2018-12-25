@@ -1,58 +1,59 @@
 
-#rawnotes "Span\nalignment string left center right\nfontFamily array symbol serif sans-serif cursive monospace fantasy\nfontStretch string ultra-condensed extra-condensed condensed semi-condensed normal semi-expanded expanded extra-expanded ultra-expanded\nfontStyle string italic normal\nfontWeight int\nstrikethrough boolean\nsubscript boolean\nsuperscript boolean\ntext string\ntextColor Color\ntextSize int\nunderline boolean\n"
-<Span>.alignment=<string_Span_alignment>;
-<new JString>=<Span>.alignment;
-<string_Span_alignment>="left"
-<string_Span_alignment>="center"
-<string_Span_alignment>="right"
+#rawnotes "Doc\nR-alternatePresentations TempVar\nR-author string\nbaseURL string\ncalculate boolean\nR-creationDate Date\nR-creator string\nR-dataObjects TempVar\ndelay boolean\ndirty boolean\nR-docID array-elemtype=JString\nR-documentFileName JString\nR-dynamicXFAForm boolean\nR-external boolean\nR-filesize boolean\nR-hidden boolean\nR-hostContainer TempVar\nR-icons TempVar\nR-info TempVar\nR-innerAppWindowRect TempVar\nR-innerDocWindowRect TempVar\nR-isModal TempVar\nR-keywords TempVar\nlayout string SinglePage OneColumn TwoColumnLeft TwoColumnRight TwoPageLeft TwoPageRight\n\n"
+<new TempVar>=<Doc>.alternatePresentations;
 
-<Span>.fontFamily=<array_Span_fontFamily>;
-<new array>=<Span>.fontFamily;
-<array_Span_fontFamily>=symbol
-<array_Span_fontFamily>=serif
-<array_Span_fontFamily>=sans-serif
-<array_Span_fontFamily>=cursive
-<array_Span_fontFamily>=monospace
-<array_Span_fontFamily>=fantasy
+<new JString>=<Doc>.author;
 
-<Span>.fontStretch=<string_Span_fontStretch>;
-<new JString>=<Span>.fontStretch;
-<string_Span_fontStretch>="ultra-condensed"
-<string_Span_fontStretch>="extra-condensed"
-<string_Span_fontStretch>="condensed"
-<string_Span_fontStretch>="semi-condensed"
-<string_Span_fontStretch>="normal"
-<string_Span_fontStretch>="semi-expanded"
-<string_Span_fontStretch>="expanded"
-<string_Span_fontStretch>="extra-expanded"
-<string_Span_fontStretch>="ultra-expanded"
+<Doc>.baseURL=<string>;
+<new JString>=<Doc>.baseURL;
 
-<Span>.fontStyle=<string_Span_fontStyle>;
-<new JString>=<Span>.fontStyle;
-<string_Span_fontStyle>="italic"
-<string_Span_fontStyle>="normal"
+<Doc>.calculate=<boolean>;
+<new boolean>=<Doc>.calculate;
 
-<Span>.fontWeight=<int>;
-<new int>=<Span>.fontWeight;
+<new Date>=<Doc>.creationDate;
 
-<Span>.strikethrough=<boolean>;
-<new boolean>=<Span>.strikethrough;
+<new JString>=<Doc>.creator;
 
-<Span>.subscript=<boolean>;
-<new boolean>=<Span>.subscript;
+<new TempVar>=<Doc>.dataObjects;
 
-<Span>.superscript=<boolean>;
-<new boolean>=<Span>.superscript;
+<Doc>.delay=<boolean>;
+<new boolean>=<Doc>.delay;
 
-<Span>.text=<string>;
-<new JString>=<Span>.text;
+<Doc>.dirty=<boolean>;
+<new boolean>=<Doc>.dirty;
 
-<Span>.textColor=<Color>;
-<new Color>=<Span>.textColor;
+<new array type=elemtype=JString>=<Doc>.docID;
 
-<Span>.textSize=<int>;
-<new int>=<Span>.textSize;
+<new JString>=<Doc>.documentFileName;
 
-<Span>.underline=<boolean>;
-<new boolean>=<Span>.underline;
+<new boolean>=<Doc>.dynamicXFAForm;
+
+<new boolean>=<Doc>.external;
+
+<new boolean>=<Doc>.filesize;
+
+<new boolean>=<Doc>.hidden;
+
+<new TempVar>=<Doc>.hostContainer;
+
+<new TempVar>=<Doc>.icons;
+
+<new TempVar>=<Doc>.info;
+
+<new TempVar>=<Doc>.innerAppWindowRect;
+
+<new TempVar>=<Doc>.innerDocWindowRect;
+
+<new TempVar>=<Doc>.isModal;
+
+<new TempVar>=<Doc>.keywords;
+
+<Doc>.layout=<string_Doc_layout>;
+<new JString>=<Doc>.layout;
+<string_Doc_layout>="SinglePage"
+<string_Doc_layout>="OneColumn"
+<string_Doc_layout>="TwoColumnLeft"
+<string_Doc_layout>="TwoColumnRight"
+<string_Doc_layout>="TwoPageLeft"
+<string_Doc_layout>="TwoPageRight"
 

@@ -3,3 +3,5 @@
 !include jsgrammar\Bookmark\line.txt
 !include jsgrammar\common.txt
 !include jsgrammar\Span\line.txt
+!include jsgrammar\AnnotRichMedia\line.txt
+!lineguard try{console.clear();console.println(iii);iii+=1;<line>}catch(e){console.println(e)}

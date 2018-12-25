@@ -16,7 +16,7 @@
 
 
 #rawnotes "Bookmark\ncreateChild - JString lines-count=10 int-0-10\nexecute\ninsertChild - Bookmark int-0-10\nremove\nsetAction - lines-count=10\n"
-<Bookmark>.createChild(<JString>,<lines count=10>,<int min=0 max=10>);
+<Bookmark>.createChild(<JString>,"<function20>();",<int min=0 max=10>);
 
 <Bookmark>.execute();
 

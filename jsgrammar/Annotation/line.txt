@@ -49,7 +49,7 @@
 <new Color>=<Annotation>.fillColor;
 
 !end lines
-<array_2int>=<array elemtype=int len=2 >;
+<array_2int>=<array elemtype=int len=2 >
 !begin lines
 <Annotation>.gestures=<array elemtype=array_2int minlen=0 maxlen=64>;
 <new TempVar>=<Annotation>.gestures;
@@ -96,8 +96,7 @@
 <Annotation>.point=<Point>;
 <new array elemtype=int>=<Annotation>.point;
 
-!begin helperlines
-<new array_2int>=<array elemtype=int len=2>;
+
 !begin lines
 <Annotation>.points=<array elemtype=array_2int len=2>;
 <new array elemtype=TempVar>=<Annotation>.points;
@@ -183,7 +182,7 @@
 <new TempVar>=<Annotation>.getStateInModel(<string_Annotation_stateModel>);
 
 ### incompleted recursive
-<new TempVar>=<Annotation>.setProps(<Annotation>);
+#<new TempVar>=<Annotation>.setProps(<Annotation>);
 
 ### incompleted
 <Annotation>.transitionToState(<JString>,<JString>);
@@ -204,7 +203,7 @@
 <string_Annotation_type>="Stamp"
 <string_Annotation_type>="Caret"
 <string_Annotation_type>="Ink"
-<string_Annotation_type>="FileAttachment"
+#<string_Annotation_type>="FileAttachment"
 <string_Annotation_type>="Sound"
 <int_Annotation_align>=0
 <int_Annotation_align>=1

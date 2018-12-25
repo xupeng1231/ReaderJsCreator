@@ -98,6 +98,7 @@ class Grammar(object):
         self._all_rules = []
         self._interesting_lines = {}
         self._all_nonhelper_lines = [] # all nonhelper indices of self._creators
+        self._all_prerun_lines = []
 
         self._creator_cdfs = {}
         self._nonrecursivecreator_cdfs = {}
@@ -273,7 +274,7 @@ class Grammar(object):
 
 
 
-    def _generate_code(self, num_lines, initial_variables=[], last_var=0):
+    def _generate_code(self, num_lines, initial_variables=[], last_var=0, prerun=False):
         """Generates a given number of lines of code."""
 
         context = {
@@ -289,7 +290,19 @@ class Grammar(object):
         # self._add_variable('document', 'Document', context)
         # self._add_variable('window', 'Window', context)
 
-        while len(context['lines']) < num_lines:
+        if prerun:
+            random.shuffle(self._all_prerun_lines)
+            for i in self._all_prerun_lines:
+                tmp_context =context.copy()
+                try:
+                    creator = self._creators['line'][i]
+                    self._expand_rule('line', creator, tmp_context, 0, False)
+                    context = tmp_context
+                except RecursionError as e:
+                    print('Warning: ' + str(e))
+
+        num_lines += len(context['lines'])
+        while len(context['lines']) < num_lines :
             tmp_context = context.copy()
             try:
                 if (random.random() < self._interesting_line_prob) and (len(tmp_context['interesting_lines']) > 0):
@@ -759,6 +772,10 @@ class Grammar(object):
                     })
             else:
                 parsedtag = self._parse_tag_and_attributes(rule_parts[i])
+                if parsedtag['tagname'] == 'prerun':
+                    prerun_times = int(parsedtag['times'])
+                    rule['prerun'] = prerun_times if prerun_times < 30 else 30
+                    continue
                 rule['parts'].append(parsedtag)
                 if 'new' in parsedtag:
                     rule['creates'].append(parsedtag)
@@ -1002,7 +1019,8 @@ class Grammar(object):
             except GrammarError:
                 print('Error parsing line ' + line)
                 num_errors += 1
-
+        # random self._all_prerun_lines
+        random.shuffle(self._all_prerun_lines)
         return num_errors
 
     def _include_from_file(self, filename):
@@ -1074,6 +1092,8 @@ class Grammar(object):
         for i in range(len(self._creators['line'])):
             self._all_nonhelper_lines.append(i)
             rule = self._creators['line'][i]
+            if 'prerun' in rule:
+                self._all_prerun_lines.extend([i]*rule['prerun'])
             for part in rule['parts']:
                 if part['type'] == 'text':
                     continue

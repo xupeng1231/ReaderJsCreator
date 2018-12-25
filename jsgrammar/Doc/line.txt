@@ -1,8 +1,10 @@
 !begin lines
 <new Bookmark nonrecursive>=this.bookmarkRoot;
 
-this.addAnnot(<Annot_literal>);this.addAnnot(<Annot_literal>);this.addAnnot(<Annot_literal>);<new array elemtype=Annotation>=this.getAnnots();
-
+this.addAnnot(<Annot_literal>);<prerun times=20>
+<new array elemtype=Annotation>=this.getAnnots();
+<new array elemtype=AnnotRichMedia>=this.getAnnotsRichMedia(0);
+<new array elemtype=AnnotRichMedia>=this.getAnnotsRichMedia(0);
 
 
 

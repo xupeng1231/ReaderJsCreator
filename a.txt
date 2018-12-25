@@ -1,13 +1,25 @@
-Span
-alignment string left center right
-fontFamily array symbol serif sans-serif cursive monospace fantasy
-fontStretch string ultra-condensed extra-condensed condensed semi-condensed normal semi-expanded expanded extra-expanded ultra-expanded
-fontStyle string italic normal
-fontWeight int
-strikethrough boolean
-subscript boolean
-superscript boolean
-text string
-textColor Color
-textSize int
-underline boolean
+Doc
+R-alternatePresentations TempVar
+R-author string
+baseURL string
+calculate boolean
+R-creationDate Date
+R-creator string
+R-dataObjects TempVar
+delay boolean
+dirty boolean
+R-docID array-elemtype=JString
+R-documentFileName JString
+R-dynamicXFAForm boolean
+R-external boolean
+R-filesize boolean
+R-hidden boolean
+R-hostContainer TempVar
+R-icons TempVar
+R-info TempVar
+R-innerAppWindowRect TempVar
+R-innerDocWindowRect TempVar
+R-isModal TempVar
+R-keywords TempVar
+layout string SinglePage OneColumn TwoColumnLeft TwoColumnRight TwoPageLeft TwoPageRight
+
