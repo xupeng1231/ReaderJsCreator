@@ -12,10 +12,10 @@ js_after='''
 console.println("AAAAA");
 '''
 if __name__=="__main__":
-    random.seed(3)
+    # random.seed(3)
     jsgrammar = Grammar()
     err = jsgrammar.parse_from_file("jsgrammar\\rootline.txt")
-    s = jsgrammar._generate_code(5000, prerun=True)
+    s = jsgrammar._generate_code(1000, prerun=True)
     s = js_whole_need_pre+s+js_after
     with open("outjs.txt","wt") as of:
         of.write(s)

@@ -1,0 +1,9 @@
+!begin lines
+
+Collab.addStateModel(<Collab_addStateModel_arg1_literal>);
+
+!end lines
+
+<Collab_addStateModel_arg1_literal>={<JString format=cName:{},> <JString format=cUIName:{},> <Collab_addStateModel_arg1_oStates_literal format=oStates:{},> <JString optional format=cDefault:{},> <boolean optional format=bHidden:{},> <boolean optional format=bHistory:{},>}
+<Collab_addStateModel_arg1_oStates_literal>={<Collab_addStateModel_arg1_oStates_elem_literal minloop=1 maxloop=9>}
+<Collab_addStateModel_arg1_oStates_elem_literal>=<JString_constant>:{xUIName:<JString>},

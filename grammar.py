@@ -517,95 +517,80 @@ class Grammar(object):
             if "optional" in part and random.random() > self._attr_optional_prob:
                 continue
 
-            if 'id' in part:
-                if part['id'] in variable_ids:
-                    ret_parts.append(variable_ids[part['id']])
-                    continue
+            loop_times = 1
+            joinstr = None
+            if 'loop' in part:
+                loop_times=int(part['loop'])
+                if 'joinstr' in part:
+                    joinstr = part['joinstr']
+            elif 'minloop' in part and 'maxloop' in part:
+                minloop = int(part['minloop'])
+                maxloop = int(part['maxloop'])
+                loop_times = random.randint(minloop, maxloop)
+                if 'joinstr' in part:
+                    joinstr = part['joinstr']
 
-            if part['type'] == 'text':
-                expanded = part['text']
-            elif rule['type'] == 'code' and 'new' in part:
-                var_type = part['tagname']
-                context['lastvar'] += 1
-                var_name = self._var_format % context['lastvar']
-                if var_type != "array":
-                    new_vars.append({'name': var_name, 'type': var_type})
-                    if var_type == symbol:
-                        ret_vars.append(var_name)
+            for _loop_times_ in range(loop_times):
+
+                if joinstr is not None and _loop_times_ != 0:
+                    ret_parts.append(joinstr)
+
+                if 'id' in part:
+                    if part['id'] in variable_ids:
+                        ret_parts.append(variable_ids[part['id']])
+                        continue
+                if part['type'] == 'text':
+                    expanded = part['text']
+                elif rule['type'] == 'code' and 'new' in part:
+                    var_type = part['tagname']
+                    context['lastvar'] += 1
+                    var_name = self._var_format % context['lastvar']
+                    if var_type != "array":
+                        new_vars.append({'name': var_name, 'type': var_type})
+                        if var_type == symbol:
+                            ret_vars.append(var_name)
+                    else:
+                        for _arr_times in range(2):
+                            context['lastvar'] += 1
+                            element_name = self._var_format % context['lastvar']
+                            append_lines.append('/* newvar{' + element_name + ':' + part['elemtype'] + '} */ var ' +
+                                                element_name +'={}[{:d}%{}.length]'.format(var_name,random.randint(1000,10000),var_name))
+                            new_vars.append({'name':element_name, 'type': part['elemtype']})
+                            if part['elemtype'] == symbol:
+                                ret_vars.append(element_name)
+                    expanded = '/* newvar{' + var_name + ':' + var_type + '} */ var ' + var_name
+                elif part['tagname'] in self._constant_types:
+                    expanded = self._constant_types[part['tagname']]
+                elif part['tagname'] in self._built_in_types:
+                    expanded = self._built_in_types[part['tagname']](part)
+                elif part['tagname'] == 'call':
+                    if 'function' not in part:
+                        raise GrammarError('Call tag without a function attribute')
+                    expanded = self._exec_function(part['function'], part, context, '')
+                elif 'array' == part['tagname']:
+                    try:
+                        expanded = self._generate_array(part, context, recursion_depth + 1, force_nonrecursive)
+                    except RecursionError as e:
+                        if not force_nonrecursive:
+                            expanded = self._generate_array(part, context, recursion_depth + 1, True)
+                        else:
+                            raise RecursionError(e)
                 else:
-                    for _ in range(2):
-                        context['lastvar'] += 1
-                        element_name = self._var_format % context['lastvar']
-                        append_lines.append('/* newvar{' + element_name + ':' + part['elemtype'] + '} */ var ' +
-                                            element_name +'={}[{:d}%{}.length]'.format(var_name,random.randint(1000,10000),var_name))
-                        new_vars.append({'name':element_name, 'type': part['elemtype']})
-                        if part['elemtype'] == symbol:
-                            ret_vars.append(element_name)
-                    append_lines
-                expanded = '/* newvar{' + var_name + ':' + var_type + '} */ var ' + var_name
-            elif part['tagname'] in self._constant_types:
-                expanded = self._constant_types[part['tagname']]
-            elif part['tagname'] in self._built_in_types:
-                expanded = self._built_in_types[part['tagname']](part)
-            elif part['tagname'] == 'call':
-                if 'function' not in part:
-                    raise GrammarError('Call tag without a function attribute')
-                expanded = self._exec_function(
-                    part['function'],
-                    part,
-                    context,
-                    ''
-                )
-            elif 'array' == part['tagname']:
-                try:
-                    expanded = self._generate_array(
-                        part,
-                        context,
-                        recursion_depth + 1,
-                        force_nonrecursive
-                    )
-                except RecursionError as e:
-                    if not force_nonrecursive:
-                        expanded = self._generate_array(
-                            part,
-                            context,
-                            recursion_depth + 1,
-                            True
-                        )
-                    else:
-                        raise RecursionError(e)
-            else:
-                try:
-                    expanded = self._generate(
-                        part['tagname'],
-                        context,
-                        recursion_depth + 1,
-                        force_nonrecursive
-                    )
-                except RecursionError as e:
-                    if not force_nonrecursive:
-                        expanded = self._generate(
-                            part['tagname'],
-                            context,
-                            recursion_depth + 1,
-                            True
-                        )
-                    else:
-                        raise RecursionError(e)
+                    try:
+                        expanded = self._generate(part['tagname'], context, recursion_depth + 1, force_nonrecursive)
+                    except RecursionError as e:
+                        if not force_nonrecursive:
+                            expanded = self._generate(part['tagname'], context, recursion_depth + 1, True)
+                        else:
+                            raise RecursionError(e)
 
-            if 'id' in part:
-                variable_ids[part['id']] = expanded
-
-            if 'beforeoutput' in part:
-                expanded = self._exec_function(
-                    part['beforeoutput'],
-                    part,
-                    context,
-                    expanded
-                )
-            if "format" in part:
-                expanded = part["format"].format(expanded)
-            ret_parts.append(expanded)
+                if 'id' in part:
+                    variable_ids[part['id']] = expanded
+                if 'beforeoutput' in part:
+                    expanded = self._exec_function(part['beforeoutput'], part, context, expanded)
+                if "format" in part:
+                    expanded = part["format"].format(expanded)
+                ret_parts.append(expanded)
 
         # Add all newly created variables to the context
         additional_lines = []

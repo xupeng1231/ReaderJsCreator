@@ -11,8 +11,15 @@
 <unicode> = <int min=0 max=1114111>
 <JString> = "foo"
 <JString> = "1"
-<JString> = String.fromCharCode(<charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>)
+#<JString> = String.fromCharCode(<charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>)
+<new JString> = String.fromCharCode(<charcode minloop=1 maxloop=34 joinstr=,>)
 
+<JString_constant> = "foo"
+<JString_constant> = "1"
+!begin helperlines
+#<new JString_constant> = String.fromCharCode(<charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>, <charcode>)
+<new JString_constant> = String.fromCharCode(<charcode minloop=1 maxloop=34 joinstr=,>)
+!end lines
 <Color>=color.transparent
 <Color>=color.black
 <Color>=color.white

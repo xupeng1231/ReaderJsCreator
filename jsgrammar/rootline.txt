@@ -1,7 +1,8 @@
-!include jsgrammar\Annotation\line.txt
-!include jsgrammar\Doc\line.txt
-!include jsgrammar\Bookmark\line.txt
+#!include jsgrammar\Annotation\line.txt
+#!include jsgrammar\Doc\line.txt
+#!include jsgrammar\Bookmark\line.txt
 !include jsgrammar\common.txt
-!include jsgrammar\Span\line.txt
-!include jsgrammar\AnnotRichMedia\line.txt
+#!include jsgrammar\Span\line.txt
+#!include jsgrammar\AnnotRichMedia\line.txt
+!include jsgrammar\Collab\line.txt
 !lineguard try{console.clear();console.println(iii);iii+=1;<line>}catch(e){console.println(e)}
